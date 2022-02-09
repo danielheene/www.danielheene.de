@@ -1,3 +1,9 @@
-export { Icon } from './Icon.component';
-export { Standard } from './Standard.component';
-export { Outline } from './Outline.component';
+import { Icon } from './Icon.component';
+import { Standard } from './Standard.component';
+import { Outline } from './Outline.component';
+
+export const Button = {
+  Icon,
+  Standard,
+  Outline,
+};

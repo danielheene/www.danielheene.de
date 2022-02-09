@@ -1,3 +1,5 @@
-export { Icon } from './Icon.component';
-export { Standard } from './Standard.component';
-export { Dropdown } from './Dropdown.component';
+import { Icon } from './Icon.component';
+import { Standard } from './Standard.component';
+import { Dropdown } from './Dropdown.component';
+
+export const Navbar = { Icon, Standard, Dropdown };

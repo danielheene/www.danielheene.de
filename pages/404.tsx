@@ -2,9 +2,9 @@ import styled from '@emotion/styled';
 import tw from 'twin.macro';
 import { Icon } from '@iconify/react';
 
-import { Button } from '~/components';
-import { Layout } from '~/layouts';
-import { NavigationItemType } from '~/types';
+import { Button } from '@components/Button';
+import { Layout } from '@layouts/index';
+import { NavigationItemType } from '@typings/navigation';
 
 const Container = styled.div(tw`
 	flex flex-grow min-h-full \
@@ -27,12 +27,12 @@ const Text = styled.div(tw`
 
 const Title = styled.h1(tw`
 	mt-2 \
-	text-4xl font-extrabold text-gray-500 dark:text-white tracking-tight sm:text-5xl
+	text-4xl font-extrabold text-white tracking-tight sm:text-5xl
 `);
 
 const Description = styled.p(tw`
 	mt-8 \
-	text-sm font-medium text-gray-300 dark:text-gray-400
+	text-sm font-medium text-gray-400
 `);
 
 const Actions = styled.div(tw`
@@ -40,39 +40,42 @@ const Actions = styled.div(tw`
 `);
 
 export default function Error() {
-	return (
-		<Layout.Error>
-			<Container>
-				<Content>
-					<IconContainer>
-						<Icon icon="feather:alert-triangle" tw="h-12 text-primary-500 w-auto" />
-					</IconContainer>
-					<Text>
-						<Title>Whoops!</Title>
-						<Description>
-							Looks like you took a wrong turn.
-							<br />
-							The page you're looking for couldn't be found.
-						</Description>
-						<Actions>
-							<Button.Standard
-								type={NavigationItemType.ACTION}
-								onClick={() => history.go(-1)}
-								icon="feather:arrow-left"
-							>
-								Back
-							</Button.Standard>
-							<Button.Standard
-								type={NavigationItemType.LINK}
-								href="/"
-								icon="feather:home"
-							>
-								Home
-							</Button.Standard>
-						</Actions>
-					</Text>
-				</Content>
-			</Container>
-		</Layout.Error>
-	);
+  return (
+    <Layout.Error>
+      <Container>
+        <Content>
+          <IconContainer>
+            <Icon
+              icon='feather:alert-triangle'
+              tw='h-12 text-primary-500 w-auto'
+            />
+          </IconContainer>
+          <Text>
+            <Title>Whoops!</Title>
+            <Description>
+              Looks like you took a wrong turn.
+              <br />
+              The page you're looking for couldn't be found.
+            </Description>
+            <Actions>
+              <Button.Standard
+                type={NavigationItemType.ACTION}
+                onClick={() => history.go(-1)}
+                icon='feather:arrow-left'
+              >
+                Back
+              </Button.Standard>
+              <Button.Standard
+                type={NavigationItemType.LINK}
+                href='/'
+                icon='feather:home'
+              >
+                Home
+              </Button.Standard>
+            </Actions>
+          </Text>
+        </Content>
+      </Container>
+    </Layout.Error>
+  );
 }

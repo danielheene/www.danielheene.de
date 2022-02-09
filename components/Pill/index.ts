@@ -1,2 +1,7 @@
-export { DatePill as Date } from './Date.component';
-export { Standard } from './Standard.component';
+import { DatePill as Date } from './Date.component';
+import { Standard } from './Standard.component';
+
+export const Pill = {
+  Date,
+  Standard,
+};

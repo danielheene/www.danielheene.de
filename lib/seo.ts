@@ -4,37 +4,38 @@ import { useRouter } from 'next/router';
 import type { ComponentProps } from 'react';
 
 export function useSeoProps(
-	props: Partial<ComponentProps<typeof NextSeo>> = {},
+  props: Partial<ComponentProps<typeof NextSeo>> = {}
 ): Partial<ComponentProps<typeof NextSeo>> {
-	const router = useRouter();
+  const router = useRouter();
 
-	const title = 'nuro ─ developer';
-	const description = "Hey 👋 I'm Ben, a developer";
+  const title = 'daniel.heene.io ─ home';
+  const description =
+    "Hey 👋 I'm Daniel, a frontend engineer with focus on React, Next.js & Typescript";
 
-	return {
-		title,
-		description,
-		canonical: `https://nuro.dev/${router.asPath}`,
-		openGraph: {
-			title,
-			description,
-			site_name: 'nuro',
-			url: `https://nuro.dev/${router.asPath}`,
-			type: 'website',
-			images: [
-				{
-					url: '/banner.png',
-					alt: description,
-					width: 1280,
-					height: 720,
-				},
-			],
-		},
-		twitter: {
-			cardType: 'summary_large_image',
-			handle: '@nurodev',
-			site: '@nurodev',
-		},
-		...props,
-	};
+  return {
+    title,
+    description,
+    canonical: `https://daniel.heene.io/${router.asPath}`,
+    openGraph: {
+      title,
+      description,
+      site_name: 'daniel.heene.io',
+      url: `https://daniel.heene.io/${router.asPath}`,
+      type: 'website',
+      images: [
+        {
+          url: '/banner.webp',
+          alt: description,
+          width: 1280,
+          height: 720,
+        },
+      ],
+    },
+    twitter: {
+      cardType: 'summary_large_image',
+      handle: '@danielheene',
+      site: '@danielheene',
+    },
+    ...props,
+  };
 }
