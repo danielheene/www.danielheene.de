@@ -37,7 +37,7 @@ export function Standard() {
     });
     camera.position.z = 15;
 
-    function handleReisze() {
+    function handleResize() {
       renderer.setSize(window.innerWidth, window.innerHeight);
       camera.perspective({
         aspect: gl.canvas.width / gl.canvas.height,
@@ -47,8 +47,8 @@ export function Standard() {
     try {
       containerRef.current.appendChild(gl.canvas);
       gl.clearColor(0, 0, 0, 0);
-      window.addEventListener('resize', handleReisze, false);
-      handleReisze();
+      window.addEventListener('resize', handleResize, false);
+      handleResize();
     } catch (error) {}
 
     const numParticles = 100;
