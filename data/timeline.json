@@ -41,10 +41,11 @@
     "tags": [
       "Shopify",
       "Next.js",
+      "React",
       "GraphQL",
       "Node.js",
       "TailwindCSS",
-      "Twin",
+      "twin.macro",
       "Stitches",
       "Sanity.io",
       "Vercel",
@@ -70,11 +71,11 @@
     ],
     "icon": "simple-icons:vuedotjs",
     "tags": [
-      "vue.js",
-      "vuetify",
-      "vue-orm",
-      "frontend",
-      "material-ui"
+      "Vue.js",
+      "Vuetify",
+      "Vue-Orm",
+      "Frontend",
+      "Material UI"
     ]
   },
   {
@@ -161,7 +162,6 @@
       "Ajax",
       "PHP",
       "Atomic Design",
-      "Atomic Frontend Development",
       "AngularJS",
       "Responsive Design",
       "Webpack",
@@ -170,6 +170,7 @@
       "Docker",
       "Vagrant",
       "Gulp",
+      "Accessibility",
       "Bootstrap",
       "Patternlab",
       "jQuery",
@@ -192,14 +193,13 @@
     ],
     "icon": "simple-icons:javascript",
     "tags": [
-      "frontend",
-      "backend",
-      "infrastructure",
       "HTML",
       "CSS",
       "jQuery",
-      "Ajax",
-      "PHP"
+      "PHP",
+      "AJAX",
+      "Apache",
+      "Debian"
     ]
   },
   {
@@ -211,13 +211,18 @@
       "My daily tasks also included the support of the company's own Debian server landscape for Apache, MySQL, PHP, Varnish & File-Sharing applications."
     ],
     "icon": "simple-icons:debian",
-    "tags:": [
+    "tags": [
       "Apache",
       "MySQL",
       "PHP",
       "Varnish",
+      "Symfony",
+      "Zend Framework",
+      "Python",
       "File-Sharing",
-      "Debian"
+      "Debian",
+      "VoIP / SIP",
+      "OS X Server"
     ]
   },
   {
@@ -233,8 +238,10 @@
       "HTML",
       "CSS",
       "jQuery",
-      "Smyfony",
-      "Wordpress"
+      "Wordpress",
+      "Zend Framework",
+      "Python",
+      "Symfony"
     ]
   }
 ]
