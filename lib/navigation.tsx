@@ -55,4 +55,12 @@ export const menuItems: Array<Array<NavigationItem>> = [
       text: 'Mail',
     },
   ],
+  [
+    {
+      type: NavigationItemType.LINK,
+      icon: 'feather:file-text',
+      text: 'Imprint',
+      href: '/imprint',
+    },
+  ],
 ];
