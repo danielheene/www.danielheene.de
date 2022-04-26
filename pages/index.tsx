@@ -14,6 +14,7 @@ import { EventType } from '@typings/events';
 import { Layout } from '@layouts/index';
 import React from 'react';
 import { HireMeMemoji } from '@components/HireMeMemoji';
+import { GetStaticProps } from 'next';
 
 const Container = tw.div`
 	min-h-screen flex items-center justify-center
@@ -89,7 +90,11 @@ const ACTIONS: Array<NavigationItem> = [
   },
 ];
 
-export default function HomePage() {
+interface Props {
+  hireMe: boolean;
+}
+
+export default function HomePage({ hireMe }: Props) {
   const today = new Date();
   const birthday = new Date('1988-04-17');
   const age = differenceInYears(today, birthday);
@@ -132,8 +137,25 @@ export default function HomePage() {
             })}
           </Actions>
         </Content>
-        <HireMeMemoji />
+        {hireMe && <HireMeMemoji />}
       </Container>
     </Layout.Default>
   );
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await fetch('https://api.github.com/repos/danielheene/danielheene/topics', {
+    headers: {
+      Accept: 'application/vnd.github.v3+json',
+    },
+  });
+
+  const { names: topics } = await response.json();
+
+  return {
+    props: {
+      hireMe: topics.includes('hire-me'),
+    },
+    revalidate: 60 * 60 * 24,
+  };
+};

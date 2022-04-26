@@ -50,7 +50,9 @@ const fadeInImage = css`
 `;
 
 const fadeInText = css`
-  ${fadeInImage};
+  opacity: 0;
+  animation: ${fadeIn} 0.3s ease-in-out;
+  animation-fill-mode: forwards;
   animation-delay: 0.5s;
 `;
 
@@ -85,7 +87,7 @@ export const HireMeMemoji = (): React.ReactElement => {
               src='/memoji_whisper.webp'
               width={500}
               height={500}
-              onLoad={() => setImageLoaded(true)}
+              onAnimationEnd={() => setImageLoaded(true)}
             />
             <SpeechBubble
               css={[imageLoaded && fadeInText]}
