@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+    "dev": {
+      "dependsOn": [
+        "^dev"
+      ]
+    },
+    "frontend#build": {
+      "dependsOn": ["studio#build"]
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "./frontend/.next",
+        "./frontend/public/studio"
+      ]
+    }
+  },
+  "globalDependencies": [
+    "$GITHUB_TOKEN",
+    "tsconfig.json"
+  ]
+}
+

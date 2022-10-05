@@ -1,0 +1,51 @@
+{
+  "name": "website",
+  "version": "0.1.1",
+  "description": "Personal Website for daniel.heene.io",
+  "repository": "https://github.com/danielheene/danielheene.git",
+  "license": "MIT",
+  "author": "Daniel Heene <daniel@heene.io>",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc",
+    "prettier": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx,vue}\""
+  },
+  "browserslist": [
+    "last 1 chrome version",
+    "last 1 firefox version",
+    "last 1 safari version"
+  ],
+  "dependencies": {
+    "@iconify/react": "^3.2.2",
+    "@portabletext/react": "1.0.6",
+    "clsx": "^1.2.1",
+    "date-fns": "2.29.3",
+    "framer-motion": "7.5.2",
+    "lodash-es": "^4.17.21",
+    "next": "12.3.1",
+    "next-sanity": "0.8.4",
+    "next-seo": "5.5.0",
+    "nprogress": "^0.2.0",
+    "ogl-typescript": "^0.1.40",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-is": "18.2.0",
+    "sharp": "0.31.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/line-clamp": "^0.4.2",
+    "@tailwindcss/typography": "^0.5.7",
+    "@types/node": "^18.8.2",
+    "@types/nprogress": "^0.2.0",
+    "@types/prettier": "^2.7.1",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "autoprefixer": "^10.4.12",
+    "postcss": "^8.4.17",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.4"
+  }
+}
