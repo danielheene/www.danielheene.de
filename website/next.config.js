@@ -92,7 +92,12 @@ module.exports = {
       ],
       fallback: [
         ...(process.env.NODE_ENV === 'production'
-          ? []
+          ? [
+              {
+                source: '/:path*',
+                destination: '/studio/:path*',
+              },
+            ]
           : [
               {
                 source: '/:path*',

@@ -8,12 +8,18 @@ import { visionTool } from '@sanity/vision';
 
 import { schemaTypes } from './schemas';
 import './overrides.css';
+
 export default createConfig({
   name: 'default',
   title: 'daniel.heene.io',
-  basePath: '/studio',
+
+  /* TODO:
+    logo?: React.ComponentType
+    icon?: React.ComponentType
+  */
 
   projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
+  basePath: import.meta.env.SANITY_STUDIO_PROJECT_BASEPATH,
   dataset: import.meta.env.SANITY_STUDIO_DATASET,
 
   plugins: [
