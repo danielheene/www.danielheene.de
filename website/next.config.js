@@ -86,7 +86,7 @@ module.exports = {
           source: '/studio/:path*',
           destination:
             process.env.NODE_ENV === 'production'
-              ? process.env.BASE_URL + '/studio/index.html'
+              ? '/studio/index.html'
               : 'http://localhost:3333/studio/:path*',
         },
       ],

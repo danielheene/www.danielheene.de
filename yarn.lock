@@ -1937,7 +1937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prettier@npm:2.7.1, @types/prettier@npm:^2.7.1":
+"@types/prettier@npm:^2.7.1":
   version: 2.7.1
   resolution: "@types/prettier@npm:2.7.1"
   checksum: 5e3f58e229d6c73b5f5cae2e8f96c1c4a5b5805f83459e17a045ba8e96152b1d38e86b63e3172fb159dac923388699660862b75b2d37e54220805f0e691e26f1
@@ -1951,14 +1951,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*":
-  version: 15.7.4
-  resolution: "@types/prop-types@npm:15.7.4"
-  checksum: ef6e1899e59b876c273811b1bd845022fc66d5a3d11cb38a25b6c566b30514ae38fe20a40f67622f362a4f4f7f9224e22d8da101cff3d6e97e11d7b4c307cfc1
-  languageName: node
-  linkType: hard
-
-"@types/prop-types@npm:^15.0.0":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.0.0":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
@@ -1971,15 +1964,6 @@ __metadata:
   dependencies:
     "@types/react": "*"
   checksum: c0fe51b79a393d4c1fa5f8a288793c03f791e0d979abaa6ae587de53b8e3bc1f05e3379e7539077a21c9d66c12c3fad3ab6684f836f2ba7a55b9589de8500738
-  languageName: node
-  linkType: hard
-
-"@types/react-dom@npm:^17.0.11":
-  version: 17.0.17
-  resolution: "@types/react-dom@npm:17.0.17"
-  dependencies:
-    "@types/react": ^17
-  checksum: 23caf98aa03e968811560f92a2c8f451694253ebe16b670929b24eaf0e7fa62ba549abe9db0ac028a9d8a9086acd6ab9c6c773f163fa21224845edbc00ba6232
   languageName: node
   linkType: hard
 
@@ -2012,7 +1996,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^17, @types/react@npm:^17.0.39, @types/react@npm:^17.0.42":
+"@types/react@npm:^17.0.42":
   version: 17.0.50
   resolution: "@types/react@npm:17.0.50"
   dependencies:
@@ -3262,7 +3246,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "daniel.heene.io@workspace:."
   dependencies:
-    "@types/prettier": 2.7.1
+    "@types/prettier": ^2.7.1
     dotenv-cli: 6.0.0
     npm-run-all: 4.1.5
     prettier: 2.7.1
@@ -3272,7 +3256,7 @@ __metadata:
     styled-components: 5.3.6
     syncpack: 8.2.4
     turbo: 1.5.5
-    typescript: 4.8.4
+    typescript: ^4.8.4
   languageName: unknown
   linkType: soft
 
@@ -9776,8 +9760,8 @@ __metadata:
     "@sanity/ui": next
     "@sanity/vision": dev-preview
     "@types/lodash": ^4.14.186
-    "@types/react": ^17.0.39
-    "@types/react-dom": ^17.0.11
+    "@types/react": ^18.0.21
+    "@types/react-dom": ^18.0.6
     "@types/styled-components": ^5.1.26
     lodash: 4.17.21
     react: 17.0.2
@@ -9788,7 +9772,7 @@ __metadata:
     sanity-plugin-asset-source-unsplash: studio-v3
     sanity-plugin-markdown: studio-v3
     styled-components: 5.3.6
-    typescript: 4.8.4
+    typescript: ^4.8.4
     vite: 3.0.0
   languageName: unknown
   linkType: soft
@@ -10257,7 +10241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.8.4, typescript@npm:^4.8.4":
+"typescript@npm:^4.8.4":
   version: 4.8.4
   resolution: "typescript@npm:4.8.4"
   bin:
@@ -10267,7 +10251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.8.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@^4.8.4#~builtin<compat/typescript>":
   version: 4.8.4
   resolution: "typescript@patch:typescript@npm%3A4.8.4#~builtin<compat/typescript>::version=4.8.4&hash=a1c5e5"
   bin:
