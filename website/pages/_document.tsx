@@ -1,5 +1,4 @@
 import { Head, Html, Main, NextScript } from 'next/document';
-import { EasterEggo } from '@components/EasterEggo';
 import React from 'react';
 
 export default function Document() {
@@ -11,10 +10,6 @@ export default function Document() {
       </Head>
       <body className='bg-black'>
         <Main />
-        <EasterEggo
-          audioPath='/eggls/toasty.mp3'
-          imagePath='/eggls/toasty.webp'
-        />
         <NextScript />
       </body>
     </Html>

@@ -5,7 +5,7 @@ import { initialState, reducer } from './EasterEggo.reducer';
 import { ActionType, Props } from './EasterEggo.types';
 
 let eventIsRegistered = false;
-export const EasterEggo = ({ imagePath, audioPath }: Props) => {
+export default function EasterEggo({ imagePath, audioPath }: Props) {
   const audioContext = useRef<AudioContext>();
   const portalRef = useRef<HTMLDivElement>();
   const [{ success, image, buffer }, dispatch] = useReducer(
@@ -14,7 +14,7 @@ export const EasterEggo = ({ imagePath, audioPath }: Props) => {
   );
 
   /**
-   *
+   * Prepare react portal as rendering target
    */
   useEffect(() => {
     if (!portalRef.current && document) {
@@ -168,4 +168,4 @@ export const EasterEggo = ({ imagePath, audioPath }: Props) => {
     </React.Fragment>,
     portalRef.current
   );
-};
+}

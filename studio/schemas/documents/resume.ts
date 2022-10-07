@@ -49,8 +49,17 @@ export default defineType({
       fieldset: COL_FIELDSET_NAME['6-6'],
     }),
     defineField({
-      title: 'Tags',
-      name: 'tags',
+      title: 'Tech',
+      name: 'tech',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        layout: 'tags',
+      },
+    }),
+    defineField({
+      title: 'Further Tech',
+      name: 'furtherTech',
       type: 'array',
       of: [{ type: 'string' }],
       options: {

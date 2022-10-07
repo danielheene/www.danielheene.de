@@ -1,1 +1,1 @@
-export { EasterEggo } from './EasterEggo';
+export { default } from './EasterEggo';

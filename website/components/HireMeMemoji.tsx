@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
-export const HireMeMemoji = (): React.ReactElement => {
+export default function HireMeMemoji(): React.ReactElement {
   const portalRef = React.useRef<HTMLDivElement>(null);
   const [showMemoji, setShowMemoji] = React.useState(false);
   const [showText, setShowText] = React.useState(false);
@@ -79,4 +79,4 @@ export const HireMeMemoji = (): React.ReactElement => {
         portalRef.current
       )
     : null;
-};
+}

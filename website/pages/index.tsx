@@ -1,28 +1,15 @@
+import React from 'react';
 import { differenceInYears, isSameDay, isSameMonth } from 'date-fns';
 import { Icon } from '@iconify/react';
+import { GetStaticProps } from 'next';
 
 import { Button } from '@components/Button';
 import { Pill } from '@components/Pill';
-// import { Transition } from '@components/index';
-import { Wave } from '@components/Wave';
 import type { NavigationItem } from '@typings/navigation';
 import { NavigationItemType } from '@typings/navigation';
-// import { EventType } from '@typings/events';
 import { Layout } from '@layouts/index';
-import React from 'react';
-import { HireMeMemoji } from '@components/HireMeMemoji';
-import { GetStaticProps } from 'next';
-//
-// const Actions = styled.div`
-//   ${tw`
-//
-// 	`}
-//   div {
-//     ${tw`
-// 			w-full sm:w-auto
-// 		`}
-//   }
-// `;
+import HireMeMemoji from '@components/HireMeMemoji';
+import Wave from '@components/Wave';
 
 const ACTIONS: Array<NavigationItem> = [
   {

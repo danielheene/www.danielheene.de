@@ -23,13 +23,12 @@
     @apply flex flex-col h-screen w-screen overflow-hidden;
   }
 
-
   *::selection {
     @apply bg-white text-primary-500;
   }
 
   :focus-visible {
-    @apply outline outline-[3px] outline-blue-500 outline-offset-4;
+    @apply outline outline-[3px] outline-primary-500 outline-offset-4;
   }
 
   :focus:not(:focus-visible) {

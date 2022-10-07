@@ -28,8 +28,13 @@ export default createConfig({
         S.list()
           .title('Content')
           .items([
+            S.listItem()
+              .title('Home')
+              .child(S.document().schemaType('home').documentId('home')),
+            S.divider(),
             ...S.documentTypeListItems().filter(
-              (listItem) => !['settings'].includes(listItem.getId() as string)
+              (listItem) =>
+                !['home', 'settings'].includes(listItem.getId() as string)
             ),
             S.divider(),
             S.listItem()
