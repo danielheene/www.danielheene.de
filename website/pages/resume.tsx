@@ -17,7 +17,7 @@ interface TimelineProps {
 }
 
 export const getStaticProps: GetStaticProps<TimelineProps> = async () => {
-  const data = await sanity.fetch('*[_type == "job"]');
+  const data = await sanity.fetch('*[_type == "resume"]');
   const jobs = data
     .sort((a, b) => sortDateDescending(a.startDate, b.startDate))
     .sort((a, b) => ('endDate' in b ? -1 : 0))

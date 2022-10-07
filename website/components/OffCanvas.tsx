@@ -104,7 +104,6 @@ export default function OffCanvas() {
               'items-center',
               'justify-center',
               'bg-black/30',
-              'backdrop-blur',
               'z-40',
             ])}
           >
