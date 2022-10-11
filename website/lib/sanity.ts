@@ -1,4 +1,4 @@
-import { createClient } from 'next-sanity';
+import { createClient, SanityClient } from 'next-sanity';
 
 const config = (() => {
   if (!process.env.SANITY_STUDIO_PROJECT_ID) {
@@ -18,4 +18,16 @@ const config = (() => {
   };
 })();
 
-export default createClient(config);
+const defaultClient: SanityClient = createClient(config);
+const previewClient: SanityClient = createClient({
+  ...config,
+  useCdn: false,
+});
+const getClient = (usePreview: boolean): SanityClient =>
+  usePreview ? previewClient : defaultClient;
+
+export default {
+  defaultClient,
+  previewClient,
+  getClient,
+};

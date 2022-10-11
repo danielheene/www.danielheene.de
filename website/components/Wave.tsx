@@ -1,10 +1,13 @@
-import { ReactNode } from 'react';
+import { memo, ReactNode } from 'react';
 
 interface WaveProps {
   children: ReactNode | ReactNode[];
 }
 
-export default function Wave({ children }: WaveProps) {
+/**
+ *
+ */
+export const Wave = memo(({ children }: WaveProps): JSX.Element => {
   return (
     <>
       <span>{children}</span>
@@ -44,4 +47,4 @@ export default function Wave({ children }: WaveProps) {
       `}</style>
     </>
   );
-}
+});

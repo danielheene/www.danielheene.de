@@ -33,8 +33,8 @@ export default defineType({
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
-          { type: 'externalLink', icon: ExternalLinkIcon },
-          { type: 'internalLink', icon: LinkIcon },
+          // { type: 'externalLink', icon: ExternalLinkIcon },
+          // { type: 'internalLink', icon: LinkIcon },
         ],
       },
     }),

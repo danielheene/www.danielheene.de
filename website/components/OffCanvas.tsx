@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ReactDOM from 'react-dom';
 import {
   AnimatePresence,
@@ -7,14 +7,33 @@ import {
   motion,
 } from 'framer-motion';
 import clsx from 'clsx';
-import { useUI } from '@lib/context';
-import { fadeInAnimation } from '@lib/animate';
-import FocusTrap from '@components/FocusTrap';
-import OffCanvasButton from '@components/OffCanvasButton';
 import { useRouter } from 'next/router';
-import { isBrowser } from '@lib/helpers';
+import { useUI } from '@lib/context';
+import { FocusTrap } from '@components/FocusTrap';
+import { OffCanvasButton } from '@components/OffCanvasButton';
+import { isBrowser } from '@lib/utils';
 
-export default function OffCanvas() {
+const fadeInSpeed = 200;
+const fadeInAnimation = {
+  show: {
+    opacity: 1,
+    transition: {
+      duration: fadeInSpeed / 1000,
+      ease: 'easeInOut',
+      when: 'beforeChildren',
+    },
+  },
+  hide: {
+    opacity: 0,
+    transition: {
+      duration: fadeInSpeed / 1000,
+      ease: 'easeInOut',
+      when: 'beforeChildren',
+    },
+  },
+};
+
+export const OffCanvas = memo((): JSX.Element => {
   const [portal, setPortal] = React.useState<HTMLDivElement>();
   const { offCanvas, setOffCanvasVisibility } = useUI();
   const router = useRouter();
@@ -103,7 +122,7 @@ export default function OffCanvas() {
               'inset-0',
               'items-center',
               'justify-center',
-              'bg-black/30',
+              'bg-black/90',
               'z-40',
             ])}
           >
@@ -117,4 +136,4 @@ export default function OffCanvas() {
     </LazyMotion>,
     portal
   );
-}
+});

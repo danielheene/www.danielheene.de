@@ -2,12 +2,15 @@
   "$schema": "https://turborepo.org/schema.json",
   "pipeline": {
     "dev": {
+      "cache": false,
       "dependsOn": [
         "^dev"
       ]
     },
-    "frontend#build": {
-      "dependsOn": ["studio#build"]
+    "website#build": {
+      "dependsOn": [
+        "studio#build"
+      ]
     },
     "build": {
       "dependsOn": [
@@ -20,9 +23,14 @@
       ]
     }
   },
-  "globalDependencies": [
-    "$GITHUB_TOKEN",
-    "tsconfig.json"
+  "globalEnv": [
+    "BASE_URL",
+    "SANITY_STUDIO_DATASET",
+    "SANITY_STUDIO_PROJECT_ID",
+    "SANITY_STUDIO_PROJECT_BASEPATH",
+    "SANITY_STUDIO_API_VERSION",
+    "SANITY_STUDIO_API_TOKEN"
   ]
 }
+
 

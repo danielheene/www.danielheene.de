@@ -1,30 +1,10 @@
 {
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": [
         "components/*"
-      ],
-      "@data/*": [
-        "data/*"
       ],
       "@layouts/*": [
         "layouts/*"
@@ -38,7 +18,8 @@
       "@typings/*": [
         "types/*"
       ]
-    }
+    },
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

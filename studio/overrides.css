@@ -1,9 +1,37 @@
+/**
+ *
+ *    push "All Fields" tab to the end of the Tabs list
+ *
+ */
+[data-ui="TabList"]:not([hidden]) {
+  display: flex !important;
+  flex-direction: row !important;
+}
+
+/*[data-ui="TabList"] > div:first-of-type {*/
+/*  display: none;*/
+/*}*/
+
+[data-ui="TabList"] > div:first-of-type {
+  order: 9999;
+  margin-left: auto;
+}
+
+/**
+
+ */
 [data-testid='pane-content'] [data-ui='Container']:first-of-type {
   max-width: 65rem;
 }
 
-[data-testid^='fieldset-'] > [data-ui='Flex'] {
+[data-as='fieldset'] > [data-ui='Flex'] {
   display: none !important;
+}
+
+[data-as='fieldset'] > [data-ui='Flex'] + [data-ui='Box'] {
+  border-left: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 [data-testid^='fieldset-'] > [data-ui='Box'],

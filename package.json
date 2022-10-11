@@ -15,10 +15,10 @@
     "chore:deduplicate": "yarn deduplicate",
     "chore:fix-mismatches": "syncpack fix-mismatches",
     "chore:set-versions": "set-versions --workspaces",
-    "dev": "dotenv -- turbo run dev --include-dependencies --parallel",
+    "dev": "dotenv -- turbo run dev --include-dependencies --parallel --continue",
     "build": "dotenv -- turbo run build --include-dependencies",
     "env": "DOPPLER_CONFIG=development_local doppler secrets download --format env --no-file > .env || true",
-    "sanity": "yarn workspace studio sanity"
+    "sanity": "yarn dotenv -- yarn workspace studio sanity"
   },
   "prettier": {
     "arrowParens": "always",
@@ -40,7 +40,6 @@
     "rimraf": "3.0.2",
     "set-versions": "1.0.3",
     "sort-package-json": "2.0.0",
-    "styled-components": "5.3.6",
     "syncpack": "8.2.4",
     "turbo": "1.5.5",
     "typescript": "^4.8.4"

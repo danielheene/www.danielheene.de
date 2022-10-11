@@ -1,4 +1,10 @@
-import React, { Ref, useCallback, useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  Ref,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { set, unset } from 'sanity/form';
 import { ObjectSchemaTypeWithOptions } from 'sanity';
 import { Grid, Stack, TextInput, Code, Box } from '@sanity/ui';
@@ -160,103 +166,105 @@ interface ContactServicesInputProps {
   };
 }
 
-export default React.forwardRef(function ContactServicesInput(
-  props: ContactServicesInputProps,
-  ref: Ref<HTMLInputElement>
-) {
-  const { value, compareValue, onChange, schemaType } = props;
-  const [labelSizes, setLabelSizes] = useState(INITIAL_LABEL_SIZES);
-  const [data, setData] = useState<ContactData>(
-    resolveInitialState(defaults(compareValue, value, INITIAL_CONTACT_VALUES))
-  );
+export const ContactServicesInput = forwardRef(
+  (
+    props: ContactServicesInputProps,
+    ref: Ref<HTMLInputElement>
+  ): JSX.Element => {
+    const { value, compareValue, onChange, schemaType } = props;
+    const [labelSizes, setLabelSizes] = useState(INITIAL_LABEL_SIZES);
+    const [data, setData] = useState<ContactData>(
+      resolveInitialState(defaults(compareValue, value, INITIAL_CONTACT_VALUES))
+    );
 
-  /**
-   *
-   */
-  const handleChange = useCallback(
-    ({
-      currentTarget: { dataset, value },
-    }: React.ChangeEvent<HTMLInputElement>) => {
-      const name = dataset.provider as ContactProvider;
-      const nextData = { ...data, [name]: value };
+    /**
+     *
+     */
+    const handleChange = useCallback(
+      ({
+        currentTarget: { dataset, value },
+      }: React.ChangeEvent<HTMLInputElement>) => {
+        const name = dataset.provider as ContactProvider;
+        const nextData = { ...data, [name]: value };
 
-      if (!isEqual(compareValue, nextData)) {
-        setData(nextData);
-      }
-    },
-    [compareValue, data]
-  );
+        if (!isEqual(compareValue, nextData)) {
+          setData(nextData);
+        }
+      },
+      [compareValue, data]
+    );
 
-  /**
-   *
-   */
-  useEffect(() => {
-    onChange(!isEqual(compareValue, data) ? set(data) : unset());
-  }, [data]);
+    /**
+     *
+     */
+    useEffect(() => {
+      onChange(!isEqual(compareValue, data) ? set(data) : unset());
+    }, [data]);
 
-  /**
-   *
-   */
-  const calculateItemWidth = useCallback(
-    (ref: HTMLElement | null) => {
-      if (!ref) return;
-      const name = ref.dataset.provider as ContactProvider;
-      const numWidth = ref.getBoundingClientRect().width;
-      const width = !!numWidth ? `${numWidth.toFixed(2)}px` : null;
+    /**
+     *
+     */
+    const calculateItemWidth = useCallback(
+      (ref: HTMLElement | null) => {
+        if (!ref) return;
+        const name = ref.dataset.provider as ContactProvider;
+        const numWidth = ref.getBoundingClientRect().width;
+        const width = !!numWidth ? `${numWidth.toFixed(2)}px` : null;
 
-      if (width && labelSizes[name] !== width) {
-        setLabelSizes((widths) => ({
-          ...widths,
-          [name]: width,
-        }));
-      }
-    },
-    [labelSizes]
-  );
+        if (width && labelSizes[name] !== width) {
+          setLabelSizes((widths) => ({
+            ...widths,
+            [name]: width,
+          }));
+        }
+      },
+      [labelSizes]
+    );
 
-  return (
-    <Stack space={2}>
-      <Grid columns={[1, 1, 2]} gap={[1, 2, 3, 3]}>
-        {schemaType.fields.map(({ name }) => {
-          const { icon: Icon, urlPrefix } = CONTACT_SERVICES.find(
-            (service) => service.name === name
-          ) as ContactService;
+    return (
+      <Stack space={2}>
+        <Grid columns={[1, 1, 2]} gap={[1, 2, 3, 3]}>
+          {schemaType.fields.map(({ name }) => {
+            const { icon: Icon, urlPrefix } = CONTACT_SERVICES.find(
+              (service) => service.name === name
+            ) as ContactService;
 
-          const inputPrefix = urlPrefix
-            .replace('https://www.', '')
-            .replace('https://', '');
+            const inputPrefix = urlPrefix
+              .replace('https://www.', '')
+              .replace('https://', '');
 
-          return (
-            <Box
-              key={name}
-              style={{
-                position: 'relative',
-              }}
-            >
-              <ContactServicePrefix
-                ref={calculateItemWidth}
-                labelWidth={labelSizes[name as ContactProvider]}
-                padding={[2, 3, 4]}
-                data-provider={name}
-              >
-                <Code>{inputPrefix}</Code>
-              </ContactServicePrefix>
-              <TextInput
-                ref={ref}
+            return (
+              <Box
                 key={name}
-                iconRight={<Icon />}
-                placeholder=''
-                fontSize={[2]}
-                padding={[2, 3, 4]}
-                space={4}
-                value={data[name as ContactProvider]}
-                data-provider={name}
-                onChange={handleChange}
-              />
-            </Box>
-          );
-        })}
-      </Grid>
-    </Stack>
-  );
-});
+                style={{
+                  position: 'relative',
+                }}
+              >
+                <ContactServicePrefix
+                  ref={calculateItemWidth}
+                  labelWidth={labelSizes[name as ContactProvider]}
+                  padding={[2, 3, 4]}
+                  data-provider={name}
+                >
+                  <Code>{inputPrefix}</Code>
+                </ContactServicePrefix>
+                <TextInput
+                  ref={ref}
+                  key={name}
+                  iconRight={<Icon />}
+                  placeholder=''
+                  fontSize={[2]}
+                  padding={[2, 3, 4]}
+                  space={4}
+                  value={data[name as ContactProvider]}
+                  data-provider={name}
+                  onChange={handleChange}
+                />
+              </Box>
+            );
+          })}
+        </Grid>
+      </Stack>
+    );
+  }
+);

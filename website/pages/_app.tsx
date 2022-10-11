@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import NProgress from 'nprogress';
 import { AppProps } from 'next/app';
 import { UIProvider } from '@lib/context';
-import OffCanvas from '@components/OffCanvas';
-import Background from '@components/Background';
-import EasterEggo from '@components/EasterEggo';
+import { OffCanvas } from '@components/OffCanvas';
+import { Background } from '@components/Background';
+import { Toastie } from '@components/Toastie';
 
 import 'nprogress/nprogress.css';
 import '../styles/globals.css';
@@ -28,10 +28,8 @@ export default function App({ Component, pageProps, router }: AppProps) {
     <>
       <UIProvider>
         <Component {...pageProps} />
-        <EasterEggo
-          audioPath='/eggls/toasty.mp3'
-          imagePath='/eggls/toasty.webp'
-        />
+        x^{' '}
+        <Toastie audioPath='/eggls/toasty.mp3' imagePath='/eggls/toasty.webp' />
         <OffCanvas />
         <Background />
       </UIProvider>

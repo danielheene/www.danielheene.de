@@ -1,30 +1,32 @@
-import internalLink from './blocks/internalLink';
-import externalLink from './blocks/externalLink';
 import blockContent from './blocks/blockContent';
-import contactServices from './blocks/contactServices';
-import customerCarousel from './blocks/customerCarousel';
-import menuSpacer from './blocks/menuSpacer';
 
-import project from './documents/project';
-import resume from './documents/resume';
+import contactServices from './objects/object.contactServices';
+import externalLink from './objects/object.externalLink';
+import internalLink from './objects/object.internalLink';
+import navigationItem from './objects/object.navigationItem';
+import sectionHeader from './objects/object.sectionHeader';
+import sectionLogoCloud from './objects/section.logoCloud';
+import sectionQualifications from './objects/section.qualifications';
 
-import home from './singletons/home';
-import settings from './singletons/settings';
+import project from './documents/document.project';
+import navigation from './documents/document.navigation';
+import home from './documents/singleton.home';
+import settings from './documents/singleton.settings';
 
 export const schemaTypes = [
   /* blocks */
-  internalLink,
-  externalLink,
   blockContent,
   contactServices,
-  customerCarousel,
-  menuSpacer,
+  externalLink,
+  internalLink,
+  navigationItem,
+  sectionHeader,
+  sectionLogoCloud,
+  sectionQualifications,
 
   /* documents */
   project,
-  resume,
-
-  /* singletons */
+  navigation,
   home,
   settings,
 ];

@@ -1,5 +1,5 @@
-import React from 'react';
-import { isBrowser, useIsomorphicLayoutEffect } from '@lib/helpers';
+import React, { memo } from 'react';
+import { isBrowser, useIsomorphicLayoutEffect } from '@lib/utils';
 
 const focusableSelector = [
   'a[href]:not([tabindex^="-"])',
@@ -20,7 +20,7 @@ interface FocusTrapProps {
   children: React.ReactNode;
 }
 
-export default function FocusTrap({ children }: FocusTrapProps): JSX.Element {
+export const FocusTrap = memo(({ children }: FocusTrapProps): JSX.Element => {
   const rootRef = React.useRef<HTMLDivElement>();
   const anchorRef = React.useRef<HTMLElement>();
   const focusedRef = React.useRef<HTMLElement>();
@@ -91,4 +91,4 @@ export default function FocusTrap({ children }: FocusTrapProps): JSX.Element {
       {children}
     </div>
   );
-}
+});

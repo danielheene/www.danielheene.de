@@ -1,45 +1,45 @@
 import React from 'react';
-import { differenceInYears, isSameDay, isSameMonth } from 'date-fns';
-import { Icon } from '@iconify/react';
+import { differenceInYears } from 'date-fns';
 import { GetStaticProps } from 'next';
+import traverse from 'traverse';
 
-import { Button } from '@components/Button';
 import { Pill } from '@components/Pill';
-import type { NavigationItem } from '@typings/navigation';
-import { NavigationItemType } from '@typings/navigation';
 import { Layout } from '@layouts/index';
-import HireMeMemoji from '@components/HireMeMemoji';
-import Wave from '@components/Wave';
+import { Wave } from '@components/Wave';
+import Sanity from '@lib/sanity';
+import { groq } from 'next-sanity';
+import { QualificationsSection } from '@components/QualificationsSection';
+import { LogoCloudSection } from '@components/LogoCloudSection';
+import {
+  LogoCloudSectionData,
+  QualificationsSectionData,
+} from '@typings/sections';
 
-const ACTIONS: Array<NavigationItem> = [
-  {
-    type: NavigationItemType.LINK,
-    external: true,
-    href: 'https://github.com/danielheene',
-    icon: <Icon className='mr-3' icon='simple-icons:github' />,
-    text: 'GitHub',
-  },
-  {
-    type: NavigationItemType.LINK,
-    external: true,
-    href: 'mailto:daniel@heene.io',
-    icon: <Icon className='mr-3' icon='feather:mail' />,
-    text: 'Hire Me!',
-  },
-  {
-    type: NavigationItemType.LINK,
-    external: true,
-    href: 'https://de.linkedin.com/in/danielheene',
-    icon: <Icon className='mr-3' icon='simple-icons:linkedin' />,
-    text: 'LinkedIn',
-  },
-];
-
-interface Props {
-  hireMe: boolean;
+interface Data {
+  qualifications: QualificationsSectionData;
+  logoCloud: LogoCloudSectionData;
 }
 
-export default function HomePage({ hireMe }: Props) {
+interface Settings {
+  readonly _id: string;
+  readonly _type: string;
+
+  pageTitle: string;
+  hireMe: boolean;
+
+  contactServices: {
+    [k: string]: string;
+  };
+}
+
+interface Props extends Data {
+  data: Data;
+  settings: Settings;
+}
+
+export default function HomePage({ data, settings }: Props) {
+  const { qualifications, logoCloud } = data;
+
   const today = new Date();
   const birthday = new Date('1988-04-17');
   const age = differenceInYears(today, birthday);
@@ -61,51 +61,59 @@ export default function HomePage({ hireMe }: Props) {
           </p>
           {/*</Transition>*/}
 
-          <div className='flex flex-col sm:flex-row items-center justify-center sm:space-x-4 space-y-4 sm:space-y-0 w-full mt-8 sm:mt-4'>
-            {ACTIONS.map((action, index) => {
-              if (action.type !== NavigationItemType.LINK) return null;
+          <div className='flex flex-col sm:flex-row items-center justify-center'>
+            {/*{ACTIONS.map((action, index) => {*/}
+            {/*  if (action.type !== NavigationItemType.LINK) return null;*/}
 
-              return (
-                // <Transition
-                //   delay={1000 + index * 100}
-                //   key={index}
-                //   duration={1000}
-                // >
-                <Button.Outline
-                  key={index}
-                  href={action.href}
-                  external={action.external}
-                >
-                  {action.icon}
-                  <span className='my-0 py-1'>{action.text}</span>
-                </Button.Outline>
-                // </Transition>
-              );
-            })}
+            {/*  return (*/}
+            {/*    // <Transition*/}
+            {/*    //   delay={1000 + index * 100}*/}
+            {/*    //   key={index}*/}
+            {/*    //   duration={1000}*/}
+            {/*    // >*/}
+            {/*    <Button.Outline*/}
+            {/*      key={index}*/}
+            {/*      href={action.href}*/}
+            {/*      external={action.external}*/}
+            {/*    >*/}
+            {/*      {action.icon}*/}
+            {/*      <span className='my-0 py-1'>{action.text}</span>*/}
+            {/*    </Button.Outline>*/}
+            {/*    // </Transition>*/}
+            {/*  );*/}
+            {/*})}*/}
           </div>
         </div>
-        {hireMe && <HireMeMemoji />}
+        {/*{hireMe && <HireMeMemoji />}*/}
       </div>
+      <QualificationsSection {...qualifications} />
+      <LogoCloudSection {...logoCloud} />
     </Layout.Default>
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch(
-    'https://api.github.com/repos/danielheene/danielheene/topics',
+export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
+  const query = groq`
     {
-      headers: {
-        Accept: 'application/vnd.github.v3+json',
+      "data": *[_type == "home"][0],
+      "settings": *[_type == "settings" && _id == "settings"][0] {
+        ...,
+        "publicKey": publicKey.asset->,
+        "resume": resume.asset->
       },
     }
-  );
+  `;
+  const sanity = Sanity.getClient(preview);
+  const sanityData = await sanity.fetch(query);
 
-  const { names: topics } = await response.json();
+  const { data, settings } = traverse(sanityData).forEach(console.log);
 
+  console.log(data, settings);
   return {
     props: {
-      hireMe: topics.includes('hire-me'),
+      data,
+      settings,
     },
-    revalidate: 60 * 60 * 24,
+    revalidate: process.env.NODE_ENV === 'production' ? 300 : 5,
   };
 };

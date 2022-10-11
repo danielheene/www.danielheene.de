@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { memo } from 'react';
 import ReactDOM from 'react-dom';
 import clsx from 'clsx';
 
-export default function HireMeMemoji(): React.ReactElement {
+export const HireMeMemoji = memo((): JSX.Element => {
   const portalRef = React.useRef<HTMLDivElement>(null);
   const [showMemoji, setShowMemoji] = React.useState(false);
   const [showText, setShowText] = React.useState(false);
@@ -79,4 +79,4 @@ export default function HireMeMemoji(): React.ReactElement {
         portalRef.current
       )
     : null;
-}
+});
