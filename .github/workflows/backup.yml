@@ -1,0 +1,38 @@
+name: Backup Routine
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  backup-dataset:
+    runs-on: ubuntu-18.04
+    name: Backup Sanity Data
+    strategy:
+      matrix:
+        dataset: [ "development", "production" ]
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+
+      - name: set output file
+        id: filename
+        run: echo "$(date +%Y-%m-%d-){{ matrix.dataset}}.tar.gz" >> $GITHUB_ENV
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: install cli
+        run: yarn install --global sanity@dev-preview wrangler
+
+      - name: export dataset
+        run: |
+          sanity dataset export {{ matrix.dataset}} "${{ env.filename }}"
+        working-directory: ./studio
+
+      - name: Upload backup.tar.gz
+        run: |
+          wrangler r2 object put "${{ GITHUB_REPOSITORY }}/${{ env.filename }}" -f ${{ env.filename }}
+        working-directory: ./studio

@@ -48,9 +48,9 @@ export default defineType({
               ],
             }),
           ],
-          // components: {
-          //   preview: SanityPreviewWithPublishedLabel,
-          // },
+          components: {
+            preview: SanityPreviewWithPublishedLabel,
+          },
           preview: {
             select: {
               name: 'image.name',

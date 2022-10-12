@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import { Qualification } from '@typings/blocks';
-import { QualificationsSectionData } from '@typings/sections';
+import { QualificationsSectionData, QualificationItemData } from '@lib/types';
+import { Card } from '@components/Card';
 
-interface QualificationEntryProps extends Qualification {
+interface QualificationEntryProps extends QualificationItemData {
   index: number;
 }
 
@@ -51,51 +51,40 @@ const QualificationEntry = ({
                 'w-4',
                 'h-4',
                 'rounded-full',
-                'bg-white',
-                'border-4',
-                'border-primary',
+                'bg-vibrant-deep-blue',
               ],
               isOdd && ['lg:left-auto', 'lg:-right-11'],
               isEven && ['lg:-left-11']
             )}
           />
-          <h3 className='font-semibold text-xl text-white mb-1'>{title}</h3>
-          <p className='font-semibold text-base text-gray-400 mb-3'>
-            {employer} | {location}
-          </p>
-          <span
-            className={clsx([
-              'inline-flex',
-              'items-center',
-              'justify-center',
-              'py-2',
-              'px-4',
-              'rounded-full',
-              'bg-primary-600/80',
-              'text-white',
-              'text-xs',
-              'font-bold',
-              'mb-5',
-            ])}
-          >
-            {!!end ? `${start} - ${end}` : `since ${start}`}
-            {/*{start} - {end}*/}
-          </span>
-          <p className='font-medium text-base text-white/70'>{body}</p>
+          <Card variant='light' tilted>
+            <h3 className='font-semibold text-xl text-white mb-1'>{title}</h3>
+            <p className='font-semibold text-base text-gray-400 mb-3'>
+              {employer} | {location}
+            </p>
+            <span
+              className={clsx([
+                'inline-flex',
+                'items-center',
+                'justify-center',
+                'py-2',
+                'px-4',
+                'rounded-full',
+                'bg-vibrant-deep-blue',
+                'text-white',
+                'text-xs',
+                'font-bold',
+                'mb-5',
+              ])}
+            >
+              {!!end ? `${start} - ${end}` : `since ${start}`}
+              {/*{start} - {end}*/}
+            </span>
+            <p className='font-medium text-base text-white/70'>{body}</p>
+          </Card>
         </div>
       </div>
       {isOdd && <div className='w-full lg:w-1/2 px-4' />}
-      <style jsx>{`
-        .glass {
-          border-radius: 20px;
-          background: rgba(170, 170, 170, 0.1);
-          backdrop-filter: blur(35px);
-          border: 2px solid rgba(255, 255, 255, 0.1);
-          box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
-          padding: 30px 30px 30px 30px;
-          overflow: hidden;
-        }
-      `}</style>
     </>
   );
 };

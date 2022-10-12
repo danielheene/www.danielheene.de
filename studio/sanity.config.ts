@@ -1,16 +1,18 @@
-import { createConfig } from 'sanity';
+import { config } from 'dotenv';
+import findWorkspaceRoot from 'find-yarn-workspace-root';
 
+import { createConfig } from 'sanity';
 import { deskTool } from 'sanity/desk';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { codeInput } from '@sanity/code-input';
 import { markdownSchema } from 'sanity-plugin-markdown';
 import { visionTool } from '@sanity/vision';
+
 // import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel';
 // import { dashboardTool } from '@sanity/dashboard';
 
 import { schemaTypes } from './schemas';
 import './overrides.css';
-import * as process from 'process';
 
 export default createConfig({
   name: 'default',

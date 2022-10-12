@@ -3,17 +3,14 @@ import { differenceInYears } from 'date-fns';
 import { GetStaticProps } from 'next';
 import traverse from 'traverse';
 
-import { Pill } from '@components/Pill';
-import { Layout } from '@layouts/index';
+import { DefaultLayout } from '@layouts/Default.layout';
 import { Wave } from '@components/Wave';
 import Sanity from '@lib/sanity';
 import { groq } from 'next-sanity';
 import { QualificationsSection } from '@components/QualificationsSection';
 import { LogoCloudSection } from '@components/LogoCloudSection';
-import {
-  LogoCloudSectionData,
-  QualificationsSectionData,
-} from '@typings/sections';
+import { LogoCloudSectionData, QualificationsSectionData } from '@lib/types';
+import { HireMeMemoji } from '@components/HireMeMemoji';
 
 interface Data {
   qualifications: QualificationsSectionData;
@@ -39,19 +36,20 @@ interface Props extends Data {
 
 export default function HomePage({ data, settings }: Props) {
   const { qualifications, logoCloud } = data;
+  const { hireMe } = settings;
 
   const today = new Date();
   const birthday = new Date('1988-04-17');
   const age = differenceInYears(today, birthday);
 
   return (
-    <Layout.Default>
+    <DefaultLayout>
       <div className='min-h-screen flex items-center justify-center py-12'>
         <div className='max-w-md sm:max-w-lg md:sm:max-w-2xl lg:sm:max-w-3xl w-full space-y-8 text-center'>
           {/*<Transition duration={1000}>*/}
           <h1 className='text-white text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-tight font-extrabold'>
-            Hey <Wave>👋</Wave> I'm Daniel, <br className='hidden sm:block' />a{' '}
-            <Pill.Standard className='mt-4'>developer</Pill.Standard>
+            Hey <Wave>👋</Wave> I'm Daniel, <br className='hidden sm:block' />a
+            JavaScript engineer
           </h1>
           {/*</Transition>*/}
           {/*<Transition delay={500} duration={1000}>*/}
@@ -84,11 +82,11 @@ export default function HomePage({ data, settings }: Props) {
             {/*})}*/}
           </div>
         </div>
-        {/*{hireMe && <HireMeMemoji />}*/}
+        {hireMe && <HireMeMemoji />}
       </div>
       <QualificationsSection {...qualifications} />
       <LogoCloudSection {...logoCloud} />
-    </Layout.Default>
+    </DefaultLayout>
   );
 }
 
@@ -103,12 +101,16 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
       },
     }
   `;
-  const sanity = Sanity.getClient(preview);
+  const [sanity, urlFor] = Sanity.getClient(preview);
   const sanityData = await sanity.fetch(query);
 
-  const { data, settings } = traverse(sanityData).forEach(console.log);
+  const { data, settings } = traverse(sanityData).forEach(function (data) {
+    if (data?._type === 'image' || data?._type === 'file') {
+      const url = urlFor(data);
+      this.update({ ...data, url });
+    }
+  });
 
-  console.log(data, settings);
   return {
     props: {
       data,

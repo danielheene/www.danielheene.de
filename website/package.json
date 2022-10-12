@@ -32,8 +32,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-is": "18.2.0",
+    "react-parallax-tilt": "1.7.68",
     "sharp": "0.31.1",
-    "traverse": "^0.6.6"
+    "traverse": "0.6.6"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",

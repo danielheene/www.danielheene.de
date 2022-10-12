@@ -1,6 +1,11 @@
-import { createClient, SanityClient } from 'next-sanity';
+import { createClient, SanityClient, groq } from 'next-sanity';
+import imageUrlBuilder from '@sanity/image-url';
+import { config } from 'dotenv';
+import findWorkspaceRoot from 'find-yarn-workspace-root';
 
-const config = (() => {
+config({ path: findWorkspaceRoot() });
+
+const sanityConfig = (() => {
   if (!process.env.SANITY_STUDIO_PROJECT_ID) {
     throw Error('The Project ID is not set. Check your environment variables.');
   }
@@ -18,13 +23,18 @@ const config = (() => {
   };
 })();
 
-const defaultClient: SanityClient = createClient(config);
+const defaultClient: SanityClient = createClient(sanityConfig);
 const previewClient: SanityClient = createClient({
-  ...config,
+  ...sanityConfig,
   useCdn: false,
 });
-const getClient = (usePreview: boolean): SanityClient =>
-  usePreview ? previewClient : defaultClient;
+
+const getClient = (usePreview: boolean): [SanityClient, (source) => string] => {
+  const client = usePreview ? previewClient : defaultClient;
+  const urlFor = (source) => imageUrlBuilder(client).image(source).url();
+
+  return [client, urlFor];
+};
 
 export default {
   defaultClient,

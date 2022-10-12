@@ -8,7 +8,7 @@
   }
 
   html {
-    @apply antialiased text-gray-200 font-sans transition ease-in-out duration-300;
+    @apply antialiased text-gray-200 font-sans transition;
   }
 
   html.dark * {
@@ -23,8 +23,8 @@
     @apply flex flex-col h-screen w-screen overflow-hidden;
   }
 
-  *::selection {
-    @apply bg-white text-primary-500;
+  ::selection {
+    @apply bg-primary text-white;
   }
 
   :focus-visible {

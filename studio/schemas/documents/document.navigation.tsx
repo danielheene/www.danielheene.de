@@ -12,8 +12,8 @@ export default defineType({
       type: 'string',
     }),
     defineField({
-      title: 'Navigation Id',
-      name: 'navId',
+      title: 'Identifier',
+      name: 'id',
       type: 'slug',
     }),
     defineField({

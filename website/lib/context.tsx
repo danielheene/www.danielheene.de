@@ -1,49 +1,53 @@
 import React, { ReactNode } from 'react';
 
-type OffCanvasState = {
-  isVisible: boolean;
-  body: ReactNode | undefined;
-};
-
 type State = {
-  isPageTransition: boolean;
-  offCanvas: OffCanvasState;
+  transitioningPage: boolean;
+  offCanvasIsVisible: boolean;
+  offCanvasBody: ReactNode | undefined;
+  headerHeight: number;
 };
 
 type Methods = {
-  togglePageTransition: (payload: State['isPageTransition']) => void;
-  setOffCanvasBody: (payload: OffCanvasState['body']) => void;
-  setOffCanvasVisibility: (payload: OffCanvasState['isVisible']) => void;
+  togglePageTransition: (payload: State['transitioningPage']) => void;
+  setOffCanvasBody: (payload: State['offCanvasBody']) => void;
+  toggleOffCanvasVisibility: (payload: State['offCanvasIsVisible']) => void;
+  setHeaderHeight: (payload: State['headerHeight']) => void;
 };
 
 type Context = State & Methods;
 
 type Action =
   | {
-      type: 'Page/TogglePageTransition';
-      payload: State['isPageTransition'];
+      type: 'UiAction/TogglePageTransition';
+      payload?: State['transitioningPage'];
     }
   | {
-      type: 'OffCanvas/SetBody';
-      payload: OffCanvasState['body'];
+      type: 'UiAction/SetOffCanvasBody';
+      payload:
+        | State['offCanvasBody']
+        | [State['offCanvasBody'], State['offCanvasIsVisible']];
     }
   | {
-      type: 'OffCanvas/SetVisibility';
-      payload: OffCanvasState['isVisible'];
+      type: 'UiAction/ToggleOffCanvas';
+      payload?: State['offCanvasIsVisible'];
+    }
+  | {
+      type: 'UiAction/SetHeaderHeight';
+      payload: State['headerHeight'];
     };
 
 const initialState: State = {
-  isPageTransition: false,
-  offCanvas: {
-    isVisible: false,
-    body: undefined,
-  },
+  transitioningPage: false,
+  offCanvasIsVisible: false,
+  offCanvasBody: undefined,
+  headerHeight: undefined,
 };
 
 const initialMethods: Methods = {
   togglePageTransition: () => undefined,
   setOffCanvasBody: () => undefined,
-  setOffCanvasVisibility: () => undefined,
+  toggleOffCanvasVisibility: () => undefined,
+  setHeaderHeight: () => undefined,
 };
 
 const initialContext: Context = {
@@ -53,29 +57,30 @@ const initialContext: Context = {
 
 const uiReducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'Page/TogglePageTransition': {
+    case 'UiAction/TogglePageTransition': {
       return {
         ...state,
-        isPageTransition: action.payload,
+        transitioningPage: action.payload || !state.transitioningPage,
       };
     }
 
-    case 'OffCanvas/SetBody': {
+    case 'UiAction/SetOffCanvasBody': {
       return {
         ...state,
-        offCanvas: {
-          ...state.offCanvas,
-          body: action.payload || undefined,
-        },
+        offCanvasBody: action.payload || undefined,
       };
     }
-    case 'OffCanvas/SetVisibility': {
+    case 'UiAction/ToggleOffCanvas': {
       return {
         ...state,
-        offCanvas: {
-          ...state.offCanvas,
-          isVisible: action.payload || false,
-        },
+        offCanvasIsVisible: action.payload || !state.offCanvasIsVisible,
+      };
+    }
+
+    case 'UiAction/SetHeaderHeight': {
+      return {
+        ...state,
+        headerHeight: action.payload,
       };
     }
 
@@ -99,20 +104,26 @@ export const UIProvider = ({
   const [state, dispatch] = React.useReducer(uiReducer, initialState);
 
   const togglePageTransition = React.useCallback(
-    (payload: boolean = false): void => {
-      dispatch({ type: 'Page/TogglePageTransition', payload });
+    (payload: State['transitioningPage']): void => {
+      dispatch({ type: 'UiAction/TogglePageTransition', payload });
     },
     []
   );
   const setOffCanvasBody = React.useCallback(
-    (payload: OffCanvasState['body'] = undefined): void => {
-      dispatch({ type: 'OffCanvas/SetBody', payload });
+    (payload: State['offCanvasBody'] = undefined): void => {
+      dispatch({ type: 'UiAction/SetOffCanvasBody', payload });
     },
     []
   );
-  const setOffCanvasVisibility = React.useCallback(
-    (payload: OffCanvasState['isVisible'] = false): void => {
-      dispatch({ type: 'OffCanvas/SetVisibility', payload });
+  const toggleOffCanvasVisibility = React.useCallback(
+    (payload: State['offCanvasIsVisible']): void => {
+      dispatch({ type: 'UiAction/ToggleOffCanvas', payload });
+    },
+    []
+  );
+  const setHeaderHeight = React.useCallback(
+    (payload: State['headerHeight']): void => {
+      dispatch({ type: 'UiAction/SetHeaderHeight', payload });
     },
     []
   );
@@ -122,9 +133,16 @@ export const UIProvider = ({
       ...state,
       togglePageTransition,
       setOffCanvasBody,
-      setOffCanvasVisibility,
+      toggleOffCanvasVisibility,
+      setHeaderHeight,
     }),
-    [state, togglePageTransition, setOffCanvasBody, setOffCanvasVisibility]
+    [
+      state,
+      togglePageTransition,
+      setOffCanvasBody,
+      toggleOffCanvasVisibility,
+      setHeaderHeight,
+    ]
   );
 
   return (

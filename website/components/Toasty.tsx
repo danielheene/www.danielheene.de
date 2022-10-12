@@ -2,10 +2,10 @@ import React, { memo, useEffect, useReducer, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
 enum ActionType {
-  KeyUp = 'Toastie/KeyUp',
-  Reset = 'Toastie/Reset',
-  SetBuffer = 'Toastie/SetBuffer',
-  SetImage = 'Toastie/SetImage',
+  KeyUp = 'Toasty/KeyUp',
+  Reset = 'Toasty/Reset',
+  SetBuffer = 'Toasty/SetBuffer',
+  SetImage = 'Toasty/SetImage',
 }
 
 type Action =
@@ -32,7 +32,7 @@ type State = {
   image?: string;
 };
 
-const keySequence = [
+const keySequence: KeyboardEvent['key'][] = [
   'ArrowUp',
   'ArrowUp',
   'ArrowDown',
@@ -94,15 +94,31 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
-interface ToastieProps {
+const printHintMessage = (): void =>
+  console.info(
+    '\n%c' +
+      '                                                \n' +
+      '    you are familiar with video games? 🎮       \n' +
+      '    good luck on finding that easter egg! 😉    \n' +
+      '                                                \n',
+    `
+          background: #000;
+          color: #fff;
+          font-size: 120%;
+          font-weight: bold;
+          padding: 0 10px;
+        `
+  );
+
+interface ToastyProps {
   audioPath: string;
   imagePath: string;
 }
 
 let eventIsRegistered = false;
-export const Toastie = memo(
-  ({ imagePath, audioPath }: ToastieProps): JSX.Element => {
-    const audioContext = useRef<AudioContext>();
+export const Toasty = memo(
+  ({ imagePath, audioPath }: ToastyProps): JSX.Element => {
+    const audioContextRef = useRef<AudioContext>();
     const portalRef = useRef<HTMLDivElement>();
     const [{ success, image, buffer }, dispatch] = useReducer(
       reducer,
@@ -112,14 +128,14 @@ export const Toastie = memo(
     /**
      * Prepare react portal as rendering target
      */
-    useEffect(() => {
+    useEffect((): (() => void) => {
       if (!portalRef.current && document) {
         portalRef.current = document.createElement('div');
-        portalRef.current?.classList.add('ReactPortal');
+        portalRef.current?.classList.add('ToastyPortal');
         document.body.appendChild(portalRef.current);
       }
 
-      return () => {
+      return (): void => {
         if (portalRef.current) {
           document.body.removeChild(portalRef.current);
           portalRef.current = undefined;
@@ -130,38 +146,23 @@ export const Toastie = memo(
     /**
      *
      */
-    useEffect(() => {
-      const handleKeyUpEvent = (event: KeyboardEvent) => {
+    useEffect((): (() => void) => {
+      const handleKeyUpEvent = (event: KeyboardEvent): void => {
         dispatch({
-          type: 'Toastie/KeyUp',
+          type: ActionType.KeyUp,
           payload: event.key,
         });
       };
 
-      setTimeout(() => {
+      setTimeout((): void => {
         if (!eventIsRegistered) {
           eventIsRegistered = true;
-
           window.addEventListener('keyup', handleKeyUpEvent, false);
-
-          console.info(
-            '\n%c' +
-              '                                                \n' +
-              '    you are familiar with video games? 🎮       \n' +
-              '    good luck on finding that easter egg! 😉    \n' +
-              '                                                \n',
-            `
-          background: #000;
-          color: #fff;
-          font-size: 120%;
-          font-weight: bold;
-          padding: 0 10px;
-        `
-          );
+          printHintMessage();
         }
       }, 0);
 
-      return () => {
+      return (): void => {
         if (eventIsRegistered) {
           eventIsRegistered = false;
           window.removeEventListener('keyup', handleKeyUpEvent, false);
@@ -172,18 +173,18 @@ export const Toastie = memo(
     /**
      *
      */
-    useEffect(() => {
+    useEffect((): void => {
       if (success && !buffer) {
-        audioContext.current = new AudioContext();
+        audioContextRef.current = new AudioContext();
 
         fetch(audioPath)
           .then((response) => response.arrayBuffer())
           .then((arrayBuffer) =>
-            audioContext.current!.decodeAudioData(arrayBuffer)
+            audioContextRef.current!.decodeAudioData(arrayBuffer)
           )
           .then((audioBuffer) => {
             dispatch({
-              type: 'Toastie/SetBuffer',
+              type: ActionType.SetBuffer,
               payload: audioBuffer,
             });
           })
@@ -199,14 +200,13 @@ export const Toastie = memo(
     /**
      *
      */
-    useEffect(() => {
+    useEffect((): void => {
       if (!image) {
         fetch(imagePath)
-          .then((response) => response.blob())
-          .then((blob) => {
+          .then(() => {
             dispatch({
-              type: 'Toastie/SetImage',
-              payload: URL.createObjectURL(blob),
+              type: ActionType.SetImage,
+              payload: imagePath,
             });
           })
           .catch((error: Error) => {
@@ -223,14 +223,14 @@ export const Toastie = memo(
      */
     useEffect(() => {
       if (buffer && image && success) {
-        const audioBuffer = audioContext.current!.createBufferSource();
+        const audioBuffer = audioContextRef.current!.createBufferSource();
         audioBuffer.buffer = buffer;
         audioBuffer.onended = () => {
           dispatch({
-            type: 'Toastie/Reset',
+            type: ActionType.Reset,
           });
         };
-        audioBuffer.connect(audioContext.current!.destination);
+        audioBuffer.connect(audioContextRef.current!.destination);
         audioBuffer.start(0);
       }
     }, [buffer, image, success]);
@@ -239,35 +239,37 @@ export const Toastie = memo(
 
     return ReactDOM.createPortal(
       <React.Fragment>
-        <div>
-          <img src={image} alt='' aria-hidden={true} />
+        <div className='toasty' aria-hidden={true} tabIndex={-1}>
+          <img src={image} alt='' />
         </div>
-        <style jsx>{`
-          @keyframes slideInAnimation {
-            0% {
-              transform: translate(100%);
+        <style jsx>
+          {`
+            @keyframes slideInAnimation {
+              0% {
+                transform: translate(100%);
+              }
+              100% {
+                transform: translate(0);
+              }
             }
-            100% {
-              transform: translate(0);
+
+            .toasty {
+              position: absolute;
+              display: flex;
+              bottom: 0;
+              right: 0;
+              animation: slideInAnimation 200ms ease-in-out forwards;
+              z-index: 2147483647;
+              pointer-events: none;
+              user-select: none;
             }
-          }
 
-          div {
-            position: absolute;
-            display: flex;
-            bottom: 0;
-            right: 0;
-            transform: translate(100%);
-            animation: slideInAnimation 200ms ease-in-out normal forwards
-              running;
-            z-index: 2147483647;
-          }
-
-          div > img {
-            width: 250px;
-            height: 250px;
-          }
-        `}</style>
+            .toasty img {
+              width: 250px;
+              height: 250px;
+            }
+          `}
+        </style>
       </React.Fragment>,
       portalRef.current
     );

@@ -1,33 +1,36 @@
 import React, { memo, ReactNode } from 'react';
-import {
-  AiOutlineClose as CloseIcon,
-  AiOutlineMenu as MenuIcon,
-} from 'react-icons/ai';
 import clsx, { ClassValue } from 'clsx';
 import { useUI } from '@lib/context';
+import { Burger } from '@components/Burger';
 
-interface OffCanvasButtonProps {
+interface MenuButtonProps {
   className?: ClassValue;
   setBody?: ReactNode | ReactNode[];
   withContainer?: boolean;
 }
 
-export const OffCanvasButton = memo(
+export const MenuButton = memo(
   ({
     className,
     setBody,
     withContainer = false,
-  }: OffCanvasButtonProps): JSX.Element => {
+  }: MenuButtonProps): JSX.Element => {
     const {
-      offCanvas: { isVisible },
-      setOffCanvasVisibility,
+      offCanvasIsVisible,
+      offCanvasBody,
+      toggleOffCanvasVisibility,
       setOffCanvasBody,
     } = useUI();
 
     const handleClick = React.useCallback(() => {
       if (setBody) setOffCanvasBody(setBody);
-      setOffCanvasVisibility(!isVisible);
-    }, [isVisible, setBody, setOffCanvasBody, setOffCanvasVisibility]);
+      toggleOffCanvasVisibility(!offCanvasIsVisible);
+    }, [
+      offCanvasIsVisible,
+      setBody,
+      setOffCanvasBody,
+      toggleOffCanvasVisibility,
+    ]);
 
     const button = React.useMemo(
       () => (
@@ -50,15 +53,18 @@ export const OffCanvasButton = memo(
             'focus:outline-none',
             'focus:ring-2',
             'focus:ring-primary-500',
+            'z-max',
             className,
           ])}
           onClick={handleClick}
-          aria-label={isVisible ? 'Close Navigation' : 'Open Navigation'}
+          aria-label={
+            offCanvasIsVisible ? 'Close Navigation' : 'Open Navigation'
+          }
         >
-          {isVisible ? <CloseIcon /> : <MenuIcon />}
+          <Burger open={offCanvasIsVisible} />
         </button>
       ),
-      [className, handleClick, isVisible]
+      [className, handleClick, offCanvasIsVisible]
     );
 
     return withContainer ? (

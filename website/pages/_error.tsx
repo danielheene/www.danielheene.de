@@ -1,8 +1,6 @@
 import { Icon } from '@iconify/react';
 
-import { Button } from '@components/Button';
 import { Layout } from '@layouts/index';
-import { NavigationItemType } from '@typings/navigation';
 import { useRouter } from 'next/router';
 
 export default function Error() {
@@ -28,20 +26,20 @@ export default function Error() {
               The page you're looking for couldn't be found.
             </p>
             <div className='mt-6 flex justify-center items-center space-x-4'>
-              <Button.Standard
-                type={NavigationItemType.ACTION}
-                onClick={() => router.push('/')}
-                icon='feather:arrow-left'
-              >
-                Back
-              </Button.Standard>
-              <Button.Standard
-                type={NavigationItemType.LINK}
-                href='/'
-                icon='feather:home'
-              >
-                Home
-              </Button.Standard>
+              {/*<Button.Standard*/}
+              {/*  type={NavigationItemType.ACTION}*/}
+              {/*  onClick={() => router.push('/')}*/}
+              {/*  icon='feather:arrow-left'*/}
+              {/*>*/}
+              {/*  Back*/}
+              {/*</Button.Standard>*/}
+              {/*<Button.Standard*/}
+              {/*  type={NavigationItemType.LINK}*/}
+              {/*  href='/'*/}
+              {/*  icon='feather:home'*/}
+              {/*>*/}
+              {/*  Home*/}
+              {/*</Button.Standard>*/}
             </div>
           </div>
         </div>

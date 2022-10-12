@@ -1,5 +1,5 @@
 import { Badge, Flex } from '@sanity/ui';
-import { SanityPreview } from 'sanity/_unstable';
+import { SanityDefaultPreview } from 'sanity/_unstable';
 import React, { forwardRef, Ref } from 'react';
 
 export const SanityPreviewWithPublishedLabel = forwardRef(
@@ -10,7 +10,7 @@ export const SanityPreviewWithPublishedLabel = forwardRef(
     return (
       <Flex justify='space-between'>
         <div style={style}>
-          <SanityPreview ref={ref} schemaType='image' {...props} />
+          <SanityDefaultPreview ref={ref} schemaType='image' {...props} />
         </div>
         <Flex align='center' paddingRight={2}>
           <Badge mode='outline' tone={published ? 'positive' : undefined}>
