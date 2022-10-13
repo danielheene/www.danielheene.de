@@ -3,12 +3,12 @@ import React from 'react';
 
 export default function Document() {
   return (
-    <Html lang='en' style={{ backgroundColor: 'black' }}>
+    <Html lang='en'>
       <Head>
         <meta charSet='utf-8' />
         <link rel='icon' type='image/png' href='/favicon.png' />
       </Head>
-      <body className='bg-black'>
+      <body>
         <Main />
         <NextScript />
       </body>

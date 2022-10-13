@@ -4,15 +4,16 @@ import { GetStaticProps } from 'next';
 import traverse from 'traverse';
 
 import { DefaultLayout } from '@layouts/Default.layout';
-import { Wave } from '@components/Wave';
 import Sanity from '@lib/sanity';
 import { groq } from 'next-sanity';
 import { QualificationsSection } from '@components/QualificationsSection';
 import { LogoCloudSection } from '@components/LogoCloudSection';
 import { LogoCloudSectionData, QualificationsSectionData } from '@lib/types';
 import { HireMeMemoji } from '@components/HireMeMemoji';
+import { Stage } from '@components/Stage';
 
 interface Data {
+  introLine: string;
   qualifications: QualificationsSectionData;
   logoCloud: LogoCloudSectionData;
 }
@@ -35,7 +36,7 @@ interface Props extends Data {
 }
 
 export default function HomePage({ data, settings }: Props) {
-  const { qualifications, logoCloud } = data;
+  const { introLine, qualifications, logoCloud } = data;
   const { hireMe } = settings;
 
   const today = new Date();
@@ -44,20 +45,25 @@ export default function HomePage({ data, settings }: Props) {
 
   return (
     <DefaultLayout>
-      <div className='min-h-screen flex items-center justify-center py-12'>
-        <div className='max-w-md sm:max-w-lg md:sm:max-w-2xl lg:sm:max-w-3xl w-full space-y-8 text-center'>
-          {/*<Transition duration={1000}>*/}
-          <h1 className='text-white text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-tight font-extrabold'>
-            Hey <Wave>👋</Wave> I'm Daniel, <br className='hidden sm:block' />a
-            JavaScript engineer
-          </h1>
-          {/*</Transition>*/}
-          {/*<Transition delay={500} duration={1000}>*/}
+      <Stage>
+        <div>
+          {introLine && (
+            <h1 className='text-white text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-tight font-extrabold'>
+              {introLine}
+              {/*Hey <Wave>👋</Wave> I'm Daniel, <br className='hidden sm:block' />*/}
+              {/*a JavaScript engineer*/}
+            </h1>
+          )}
           <p className='max-w-xs mt-4 md:mt-8 mx-auto text-base text-gray-300 sm:text-lg md:text-xl md:max-w-3xl font-semibold'>
             I am a {age} year old javascript engineer & modular synthesizer
             enthusiast.
           </p>
-          {/*</Transition>*/}
+        </div>
+        <div>IMAGE!!</div>
+      </Stage>
+      <div className='min-h-screen flex items-center justify-center py-12'>
+        <div className='max-w-md sm:max-w-lg md:sm:max-w-2xl lg:sm:max-w-3xl w-full space-y-8 text-center'>
+          {/*<Transition duration={1000}>*/}
 
           <div className='flex flex-col sm:flex-row items-center justify-center'>
             {/*{ACTIONS.map((action, index) => {*/}

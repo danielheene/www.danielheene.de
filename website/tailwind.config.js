@@ -1,4 +1,5 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
+const colors = require('tailwindcss/colors');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -29,6 +30,7 @@ module.exports = {
       },
       borderRadius: {
         'none': '0px',
+        '3': '3px',
         'sm': '0.125rem',
         'DEFAULT': '0.25rem',
         'md': '0.375rem',
@@ -232,11 +234,20 @@ module.exports = {
         max: 'max-content',
         fit: 'fit-content',
       }),
-      container: {
-        center: true,
-        padding: {
-          DEFAULT: '1rem',
-        },
+      container: ({ theme, breakpoints }) => {
+        // only assign last breakpoint for enabling a fluid container
+        const bps = breakpoints(theme('screens'));
+        const [key, value] = Object.entries(bps).at(-1);
+
+        return {
+          center: true,
+          screens: {
+            [key]: value,
+          },
+          padding: {
+            DEFAULT: '1rem',
+          },
+        };
       },
       space: ({ theme }) => ({
         ...theme('spacing'),
@@ -248,48 +259,6 @@ module.exports = {
         black: '#000',
         white: '#fff',
 
-        // 'black': '#090E34',
-        // 'dark': '#1D2144',
-        // 'primary': '#4A6CF7',
-        // 'yellow': '#FBB040',
-        // 'body-color': '#959CB1',
-
-        // slate: colors.slate,
-        // gray: colors.gray,
-        // zinc: colors.zinc,
-        // neutral: colors.neutral,
-        // stone: colors.stone,
-        // red: colors.red,
-        // orange: colors.orange,
-        // amber: colors.amber,
-        // yellow: colors.yellow,
-        // lime: colors.lime,
-        // green: colors.green,
-        // emerald: colors.emerald,
-        // teal: colors.teal,
-        // cyan: colors.cyan,
-        // sky: colors.sky,
-        // blue: colors.blue,
-        // indigo: colors.indigo,
-        // violet: colors.violet,
-        // purple: colors.purple,
-        // fuchsia: colors.fuchsia,
-        // pink: colors.pink,
-        // rose: colors.rose,
-
-        gray: {
-          DEFAULT: '#282d34',
-          50: '#f9fafb',
-          100: '#eaeaeb',
-          200: '#cacbcd',
-          300: '#a7a9ac',
-          400: '#696c71',
-          500: '#282d34',
-          600: '#24292f',
-          700: '#181b20',
-          800: '#121518',
-          900: '#0c0e10',
-        },
         primary: {
           DEFAULT: '#7A57F5',
           50: '#FFFFFF',
@@ -303,10 +272,101 @@ module.exports = {
           800: '#2A099A',
           900: '#1B0665',
         },
+
+        slate: {
+          DEFAULT: colors.slate['500'],
+          ...colors.slate,
+        },
+        gray: {
+          DEFAULT: colors.gray['500'],
+          ...colors.gray,
+        },
+        zinc: {
+          DEFAULT: colors.zinc['500'],
+          ...colors.zinc,
+        },
+        neutral: {
+          DEFAULT: colors.neutral['500'],
+          ...colors.neutral,
+        },
+        stone: {
+          DEFAULT: colors.stone['500'],
+          ...colors.stone,
+        },
+        red: {
+          DEFAULT: colors.red['500'],
+          ...colors.red,
+        },
+        orange: {
+          DEFAULT: colors.orange['500'],
+          ...colors.orange,
+        },
+        amber: {
+          DEFAULT: colors.amber['500'],
+          ...colors.amber,
+        },
+        yellow: {
+          DEFAULT: colors.yellow['500'],
+          ...colors.yellow,
+        },
+        lime: {
+          DEFAULT: colors.lime['500'],
+          ...colors.lime,
+        },
+        green: {
+          DEFAULT: colors.green['500'],
+          ...colors.green,
+        },
+        emerald: {
+          DEFAULT: colors.emerald['500'],
+          ...colors.emerald,
+        },
+        teal: {
+          DEFAULT: colors.teal['500'],
+          ...colors.teal,
+        },
+        cyan: {
+          DEFAULT: colors.cyan['500'],
+          ...colors.cyan,
+        },
+        sky: {
+          DEFAULT: colors.sky['500'],
+          ...colors.sky,
+        },
+        blue: {
+          DEFAULT: colors.blue['500'],
+          ...colors.blue,
+        },
+        indigo: {
+          DEFAULT: colors.indigo['500'],
+          ...colors.indigo,
+        },
+        violet: {
+          DEFAULT: colors.violet['500'],
+          ...colors.violet,
+        },
+        purple: {
+          DEFAULT: colors.purple['500'],
+          ...colors.purple,
+        },
+        fuchsia: {
+          DEFAULT: colors.fuchsia['500'],
+          ...colors.fuchsia,
+        },
+        pink: {
+          DEFAULT: colors.pink['500'],
+          ...colors.pink,
+        },
+        rose: {
+          DEFAULT: colors.rose['500'],
+          ...colors.rose,
+        },
       },
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        inter: ['Inter', ...defaultTheme.fontFamily.sans],
+        'sans': ['Inter', ...defaultTheme.fontFamily.sans],
+        'inter': ['Inter', ...defaultTheme.fontFamily.sans],
+        'syne': ['Syne', ...defaultTheme.fontFamily.sans],
+        'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
         '10xl': ['10rem', '1'],

@@ -13,10 +13,8 @@ import ReactParallaxTilt from 'react-parallax-tilt';
 
 const { className: rootClassName, styles: rootStyles } = css.resolve`
   .card {
-    border-radius: 1rem;
     backdrop-filter: blur(10px);
     box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
-    padding: 2rem;
   }
 
   .card.card-light {
@@ -37,6 +35,7 @@ interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
   variant?: 'light' | 'dark';
   container?: boolean;
   tilted?: boolean;
+  radius?: boolean;
   as?: keyof HTMLElementTagNameMap;
 }
 
@@ -44,10 +43,11 @@ export const Card = forwardRef(
   (
     {
       className,
-      variant = 'dark',
+      variant = 'light',
       container = false,
       tilted = false,
       children,
+      radius = true,
       ...rest
     }: CardProps,
     ref: RefObject<HTMLDivElement>
@@ -62,6 +62,8 @@ export const Card = forwardRef(
             variant === 'light' && 'card-light',
             variant === 'dark' && 'card-dark',
             container && 'container',
+            radius && 'rounded-2xl',
+            !container && 'p-2',
             className
           )}
           ref={ref}

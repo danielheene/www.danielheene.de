@@ -1,5 +1,6 @@
 import blockContent from './blocks/blockContent';
 
+import metaDefaults from './objects/meta.defaults';
 import contactServices from './objects/object.contactServices';
 import externalLink from './objects/object.externalLink';
 import internalLink from './objects/object.internalLink';
@@ -14,6 +15,9 @@ import home from './documents/singleton.home';
 import settings from './documents/singleton.settings';
 
 export const schemaTypes = [
+  /* meta */
+  metaDefaults,
+
   /* blocks */
   blockContent,
   contactServices,

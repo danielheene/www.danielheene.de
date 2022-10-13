@@ -22,6 +22,12 @@ export default defineType({
     resume: null,
     publicKey: null,
   }),
+  groups: [
+    {
+      title: 'Meta',
+      name: 'meta',
+    },
+  ],
   fields: [
     defineField({
       title: 'Page Title',
@@ -50,6 +56,12 @@ export default defineType({
       name: 'publicKey',
       type: 'file',
       fieldset: COL_FIELDSET_NAME['6-6'],
+    }),
+    defineField({
+      title: 'Meta',
+      name: 'metaDefault',
+      type: 'meta.defaults',
+      group: 'meta',
     }),
   ],
   fieldsets: [...COL_FIELDSETS],

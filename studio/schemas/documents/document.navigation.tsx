@@ -4,7 +4,6 @@ export default defineType({
   title: 'Navigation',
   name: 'navigation',
   type: 'document',
-  // icon: GrNavigate,
   fields: [
     defineField({
       title: 'Title',

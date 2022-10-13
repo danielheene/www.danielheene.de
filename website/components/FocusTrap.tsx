@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { isBrowser, useIsomorphicLayoutEffect } from '@lib/utils';
 
 const focusableSelector = [
@@ -25,14 +25,14 @@ export const FocusTrap = memo(({ children }: FocusTrapProps): JSX.Element => {
   const anchorRef = React.useRef<HTMLElement>();
   const focusedRef = React.useRef<HTMLElement>();
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     if (document && document.activeElement && !anchorRef.current) {
       anchorRef.current = document.activeElement as HTMLElement;
     }
 
     return () => {
       if (document && anchorRef.current) {
-        anchorRef.current.focus();
+        anchorRef.current?.focus();
       }
     };
   }, []);
@@ -44,7 +44,7 @@ export const FocusTrap = memo(({ children }: FocusTrapProps): JSX.Element => {
         focusedRef.current = element;
         clearInterval(interval);
       } else {
-        element.focus();
+        element?.focus();
       }
     }, 25);
   }, []);

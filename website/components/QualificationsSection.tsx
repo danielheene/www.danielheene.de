@@ -132,13 +132,7 @@ export const QualificationsSection = ({
                   </h2>
                 )}
                 {subHeadline && (
-                  <p
-                    className={clsx([
-                      'font-medium',
-                      'text-lg',
-                      'text-body-color',
-                    ])}
-                  >
+                  <p className={clsx(['font-medium', 'text-lg', 'text-white'])}>
                     {subHeadline}
                   </p>
                 )}

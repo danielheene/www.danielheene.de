@@ -2,6 +2,7 @@ import React, { memo, ReactNode } from 'react';
 import clsx, { ClassValue } from 'clsx';
 import { useUI } from '@lib/context';
 import { Burger } from '@components/Burger';
+import { Card } from '@components/Card';
 
 interface MenuButtonProps {
   className?: ClassValue;
@@ -34,22 +35,25 @@ export const MenuButton = memo(
 
     const button = React.useMemo(
       () => (
-        <button
+        <Card
+          as='button'
+          radius={false}
           className={clsx([
             'text-4xl',
-            'text-current',
+            'text-white',
             'transition-colors',
             'flex',
             'items-center',
             'justify-center',
-            'w-min-[40px]',
-            'h-min-[40px]',
+            'w-[40px]',
+            'h-[40px]',
             'pointer-events-auto',
             'ml-auto',
+            'box-border',
             'p-2',
-            'bg-gray-700',
-            'hover:bg-gray-500',
-            'rounded-lg',
+            'bg-primary-800',
+            'hover:bg-primary-700',
+            'rounded-3',
             'focus:outline-none',
             'focus:ring-2',
             'focus:ring-primary-500',
@@ -62,7 +66,7 @@ export const MenuButton = memo(
           }
         >
           <Burger open={offCanvasIsVisible} />
-        </button>
+        </Card>
       ),
       [className, handleClick, offCanvasIsVisible]
     );

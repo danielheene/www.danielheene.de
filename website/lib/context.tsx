@@ -29,7 +29,7 @@ type Action =
     }
   | {
       type: 'UiAction/ToggleOffCanvas';
-      payload?: State['offCanvasIsVisible'];
+      payload: State['offCanvasIsVisible'];
     }
   | {
       type: 'UiAction/SetHeaderHeight';
@@ -60,7 +60,7 @@ const uiReducer = (state: State, action: Action) => {
     case 'UiAction/TogglePageTransition': {
       return {
         ...state,
-        transitioningPage: action.payload || !state.transitioningPage,
+        transitioningPage: action.payload || state.transitioningPage,
       };
     }
 
@@ -73,7 +73,7 @@ const uiReducer = (state: State, action: Action) => {
     case 'UiAction/ToggleOffCanvas': {
       return {
         ...state,
-        offCanvasIsVisible: action.payload || !state.offCanvasIsVisible,
+        offCanvasIsVisible: action.payload || state.offCanvasIsVisible,
       };
     }
 

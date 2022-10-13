@@ -19,6 +19,10 @@ export default defineType({
       name: 'qualifications',
       title: 'Qualifications',
     },
+    {
+      title: 'Meta',
+      name: 'meta',
+    },
   ],
   fields: [
     defineField({
@@ -38,6 +42,12 @@ export default defineType({
       group: 'main',
     }),
     defineField({
+      title: 'Portrait',
+      name: 'portrait',
+      type: 'image',
+      group: 'main',
+    }),
+    defineField({
       title: 'Logo Cloud',
       name: 'logoCloud',
       type: 'section.logoCloud',
@@ -48,6 +58,12 @@ export default defineType({
       name: 'qualifications',
       type: 'section.qualifications',
       group: 'qualifications',
+    }),
+    defineField({
+      title: 'Meta',
+      name: 'metaDefault',
+      type: 'meta.defaults',
+      group: 'meta',
     }),
   ],
   fieldsets: COL_FIELDSETS,

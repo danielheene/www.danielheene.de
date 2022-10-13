@@ -6,24 +6,28 @@ export default defineType({
   type: 'document',
   name: 'project',
   title: 'Project',
-  fieldsets: [...COL_FIELDSETS],
+  groups: [
+    {
+      title: 'Main',
+      name: 'main',
+    },
+    {
+      title: 'Meta',
+      name: 'meta',
+    },
+  ],
   fields: [
     defineField({
       title: 'Title',
       name: 'title',
       type: 'string',
-      fieldset: COL_FIELDSET_NAME['7-5'],
+      group: 'main',
     }),
     defineField({
-      title: 'Slug',
-      name: 'slug',
-      type: 'slug',
-      options: {
-        source: 'title',
-        slugify: (input) => `/project/` + kebabCase(deburr(input)),
-        maxLength: 96,
-      },
-      fieldset: COL_FIELDSET_NAME['7-5'],
+      title: 'Excerpt',
+      name: 'excerpt',
+      type: 'text',
+      group: 'main',
     }),
     defineField({
       title: 'Poster',
@@ -85,5 +89,12 @@ export default defineType({
         layout: 'tags',
       },
     }),
+    defineField({
+      title: 'Meta',
+      name: 'metaDefault',
+      type: 'meta.defaults',
+      group: 'meta',
+    }),
   ],
+  fieldsets: COL_FIELDSETS,
 });

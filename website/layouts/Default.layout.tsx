@@ -1,9 +1,6 @@
 import { NextSeo } from 'next-seo';
-
-// import { useSeoProps } from '@lib/seo';
 import React, { ComponentProps, ReactNode } from 'react';
-import { MenuButton } from '@components/MenuButton';
-import { Navigation } from '@components/Navigation';
+import { Header } from '@components/Header';
 
 interface DefaultLayoutProps {
   children?: ReactNode | ReactNode[];
@@ -15,8 +12,7 @@ export function DefaultLayout({ children, seo }: DefaultLayoutProps) {
 
   return (
     <>
-      {/*<NextSeo {...seoProps} />*/}
-      <MenuButton withContainer setBody={<Navigation vertical />} />
+      <Header />
       <main className='flex flex-col h-screen max-h-screen overflow-scroll'>
         {children}
       </main>

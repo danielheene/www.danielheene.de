@@ -21,7 +21,7 @@ export const HireMeMemoji = memo((): JSX.Element => {
     if (window && window.innerWidth > 700 && window.innerHeight > 700) {
       setTimeout(() => {
         setShowMemoji(true);
-      }, 3000);
+      }, 10000);
     }
   }, []);
 

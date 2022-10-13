@@ -10,7 +10,7 @@ export const SanityPreviewWithPublishedLabel = forwardRef(
     return (
       <Flex justify='space-between'>
         <div style={style}>
-          <SanityDefaultPreview ref={ref} schemaType='image' {...props} />
+          <SanityDefaultPreview ref={ref} schemaType='string' {...props} />
         </div>
         <Flex align='center' paddingRight={2}>
           <Badge mode='outline' tone={published ? 'positive' : undefined}>
