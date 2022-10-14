@@ -1,5 +1,8 @@
 name: Backup Routine
 on:
+  push:
+    branches:
+      - feature/v2  # TODO: adjust
   schedule:
     - cron: '0 4 * * *'
   workflow_dispatch:
