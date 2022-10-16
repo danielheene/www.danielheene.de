@@ -20,7 +20,7 @@ jobs:
 
       - name: set output file
         id: filename
-        run: echo "$(date +%Y-%m-%d-){{ matrix.dataset}}.tar.gz" >> $GITHUB_ENV
+        run: echo "$(date +%Y-%m-%d-)${{ matrix.dataset}}.tar.gz" >> $GITHUB_ENV
 
       - name: setup node
         uses: actions/setup-node@v3
@@ -32,10 +32,10 @@ jobs:
 
       - name: export dataset
         run: |
-          sanity dataset export {{ matrix.dataset}} "${{ env.filename }}"
+          sanity dataset export "${{ matrix.dataset}}" "${{ env.filename }}"
         working-directory: ./studio
 
       - name: Upload backup.tar.gz
         run: |
-          wrangler r2 object put "${{ GITHUB_REPOSITORY }}/${{ env.filename }}" -f ${{ env.filename }}
+          wrangler r2 object put "${{ github.repository	}}/${{ env.filename }}" -f ${{ env.filename }}
         working-directory: ./studio
