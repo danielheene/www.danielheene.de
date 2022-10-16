@@ -20,7 +20,7 @@ jobs:
 
       - name: set output file
         id: env
-        run: echo "::set-output name=filename::$(date +%Y-%m-%d)-${{ matrix.dataset}}.tar.gz" >> $GITHUB_ENV
+        run: echo "::set-output name=filename::$(date +%Y-%m-%d)-${{ matrix.dataset}}.tar.gz"
 
       - name: setup node
         uses: actions/setup-node@v3
@@ -28,7 +28,7 @@ jobs:
           node-version-file: '.nvmrc'
 
       - name: install cli
-        run: yarn install --global sanity@dev-preview wrangler
+        run: npm install --global sanity@dev-preview wrangler
 
       - name: export dataset
         run: |
