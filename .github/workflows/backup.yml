@@ -30,12 +30,11 @@ jobs:
       - name: install cli
         run: |
           npm install --global yarn@latest npm@latest
-          yarn global add sanity@dev-preview wrangler
+          yarn install
 
       - name: export dataset
         run: |
-          yarn install
-          sanity dataset export "${{ matrix.dataset}}" "${{ steps.env.outputs.filename }}"
+          yarn sanity dataset export "${{ matrix.dataset}}" "${{ steps.env.outputs.filename }}"
         working-directory: ./studio
 
       - name: Upload backup.tar.gz
