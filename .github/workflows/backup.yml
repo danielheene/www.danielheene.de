@@ -40,10 +40,7 @@ jobs:
         run: |
           set -e
 
-          cat << EOF > .env
-          SANITY_STUDIO_API_PROJECT_ID=${{ secrets.SANITY_STUDIO_API_PROJECT_ID }}
-          EOF
-
+          SANITY_STUDIO_API_PROJECT_ID="${{ secrets.SANITY_STUDIO_API_PROJECT_ID }}" \
           SANITY_AUTH_TOKEN="${{ secrets.SANITY_AUTH_TOKEN }}" \
             sanity dataset export "${{ matrix.dataset}}" "${{ steps.env.outputs.filename }}"
         working-directory: ./studio
