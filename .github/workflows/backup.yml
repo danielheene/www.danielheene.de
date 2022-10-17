@@ -15,9 +15,6 @@ jobs:
       matrix:
         dataset: [ "development", "production" ]
     steps:
-      - name: checkout repository
-        uses: actions/checkout@v3
-
       - name: set output file
         id: env
         run: echo "::set-output name=filename::$(date +%Y-%m-%d)-${{ matrix.dataset}}.tar.gz"
@@ -26,18 +23,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
+          cache: 'npm'
 
-      - name: install cli
+      - name: install sanity cli
         run: |
-          npm install --global yarn@latest npm@latest
-          yarn install
+          npm install --global sanity@dev-preview wrangler@latest
 
       - name: export dataset
         run: |
-          yarn sanity dataset export "${{ matrix.dataset}}" "${{ steps.env.outputs.filename }}"
-        working-directory: ./studio
+          set -e
 
-      - name: Upload backup.tar.gz
+          cat << EOF > .env
+          SANITY_STUDIO_API_PROJECT_ID=${{ secrets.SANITY_STUDIO_API_PROJECT_ID }}
+          EOF
+
+          SANITY_AUTH_TOKEN="${{ secrets.SANITY_AUTH_TOKEN }}" \
+            sanity dataset export "${{ matrix.dataset}}" "${{ steps.env.outputs.filename }}"
+
+      - name: upload backup.tar.gz
         run: |
           wrangler r2 object put "${{ github.repository	}}/${{ env.filename }}" -f ${{ steps.env.outputs.filename }}
         working-directory: ./studio
