@@ -14,9 +14,6 @@
       ],
       "@pages/*": [
         "pages/*"
-      ],
-      "@typings/*": [
-        "types/*"
       ]
     },
     "incremental": true
@@ -28,8 +25,5 @@
   ],
   "exclude": [
     "node_modules"
-  ],
-  "types": [
-    "types"
   ]
 }

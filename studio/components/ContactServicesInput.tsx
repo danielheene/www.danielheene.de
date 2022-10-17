@@ -8,17 +8,8 @@ import React, {
 import { set, unset } from 'sanity/form';
 import { ObjectSchemaTypeWithOptions } from 'sanity';
 import { Grid, Stack, TextInput, Code, Box } from '@sanity/ui';
-import { IconType } from 'react-icons';
-import {
-  SiGithub as GitHubIcon,
-  SiWhatsapp as WhatsAppIcon,
-  SiInstagram as InstagramIcon,
-  SiDiscord as DiscordIcon,
-  SiMaildotru as MailIcon,
-  SiPhonepe as PhoneIcon,
-  SiLinkedin as LinkedInIcon,
-  SiXing as XingIcon,
-} from 'react-icons/all';
+import { Icon } from '@iconify/react';
+
 import { defaults, isEqual } from 'lodash';
 import styled from 'styled-components';
 
@@ -36,7 +27,7 @@ type ContactService = {
   name: ContactProvider;
   label: string;
   urlPrefix: string;
-  icon: IconType;
+  icon: string;
 };
 
 type ContactData = Record<ContactProvider, string>;
@@ -46,49 +37,49 @@ const CONTACT_SERVICES: ContactService[] = [
     name: 'github',
     label: 'GitHub',
     urlPrefix: 'https://github.com/',
-    icon: GitHubIcon,
+    icon: 'simple-icons:github',
   },
   {
     name: 'whatsapp',
     label: 'WhatsApp',
     urlPrefix: 'https://wa.me/',
-    icon: WhatsAppIcon,
+    icon: 'simple-icons:whatsapp',
   },
   {
     name: 'instagram',
     label: 'Instagram',
     urlPrefix: 'https://www.instagram.com/',
-    icon: InstagramIcon,
+    icon: 'simple-icons:instagram',
   },
   {
     name: 'discord',
     label: 'Discord',
     urlPrefix: 'https://discord.com/users/',
-    icon: DiscordIcon,
+    icon: 'simple-icons:discord',
   },
   {
     name: 'mail',
     label: 'Mail',
     urlPrefix: 'mailto:',
-    icon: MailIcon,
+    icon: 'simple-icons:maildotru',
   },
   {
     name: 'phone',
     label: 'Phone',
     urlPrefix: 'tel:',
-    icon: PhoneIcon,
+    icon: 'carbon:phone-filled',
   },
   {
     name: 'linkedin',
     label: 'LinkedIn',
     urlPrefix: 'https://www.linkedin.com/in/',
-    icon: LinkedInIcon,
+    icon: 'simple-icons:linkedin',
   },
   {
     name: 'xing',
     label: 'Xing',
     urlPrefix: 'https://www.xing.com/profile/',
-    icon: XingIcon,
+    icon: 'simple-icons:xing',
   },
 ];
 
@@ -225,7 +216,7 @@ export const ContactServicesInput = forwardRef(
       <Stack space={2}>
         <Grid columns={[1, 1, 2]} gap={[1, 2, 3, 3]}>
           {schemaType.fields.map(({ name }) => {
-            const { icon: Icon, urlPrefix } = CONTACT_SERVICES.find(
+            const { icon, urlPrefix } = CONTACT_SERVICES.find(
               (service) => service.name === name
             ) as ContactService;
 
@@ -251,7 +242,7 @@ export const ContactServicesInput = forwardRef(
                 <TextInput
                   ref={ref}
                   key={name}
-                  iconRight={<Icon />}
+                  iconRight={<Icon icon={icon} />}
                   placeholder=''
                   fontSize={[2]}
                   padding={[2, 3, 4]}

@@ -1,5 +1,6 @@
 import { SectionHeaderData } from '@lib/types';
 import { Box } from '@components/Box';
+import { Typography } from '@components/Typography';
 
 interface SectionHeaderProps extends SectionHeaderData {}
 
@@ -10,18 +11,22 @@ export const SectionHeader = (props: SectionHeaderProps): JSX.Element => {
   return (
     <Box
       as='header'
-      className='flex flex-col lg:flex-row lg:justify-between items-center my-24 container'
+      className='container flex flex-col justify-center items-center gap-6 my-24 text-center text-white'
     >
-      {preHeadline && <p className='text-primary text-sm font-bold'></p>}
+      {preHeadline && (
+        <Typography as='p' variant='section-subheading'>
+          {preHeadline}
+        </Typography>
+      )}
       {headline && (
-        <h2 className='text-transparent bg-clip-text bg-vibrant-october-silence text-6xl font-bold text-center mb-2 lg:mb-0'>
+        <Typography as='h2' variant='section-heading'>
           {headline}
-        </h2>
+        </Typography>
       )}
       {subHeadline && (
-        <p className='max-w-md text-gray-400 text-center lg:text-right'>
+        <Typography as='p' variant='section-subheading'>
           {subHeadline}
-        </p>
+        </Typography>
       )}
     </Box>
   );

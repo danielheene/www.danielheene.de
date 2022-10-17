@@ -9,6 +9,7 @@
     "build": "sanity build ../website/public/studio -y"
   },
   "dependencies": {
+    "@iconify/react": "^3.2.2",
     "@sanity/code-input": "studio-v3",
     "@sanity/ui": "next",
     "@sanity/vision": "dev-preview",
@@ -16,7 +17,6 @@
     "lodash": "4.17.21",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "4.4.0",
     "react-is": "17.0.2",
     "sanity": "dev-preview",
     "sanity-plugin-asset-source-unsplash": "studio-v3",

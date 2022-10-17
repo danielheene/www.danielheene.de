@@ -8,9 +8,10 @@ import {
 } from 'framer-motion';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import { useUI } from '@lib/context';
+import { useAppStore } from '@lib/app-context';
 import { FocusTrap } from '@components/FocusTrap';
 import { isBrowser } from '@lib/utils';
+import { Navigation } from '@components/Navigation';
 
 const fadeInSpeed = 200;
 const fadeInAnimation = {
@@ -34,12 +35,7 @@ const fadeInAnimation = {
 
 export const OffCanvas = memo((): JSX.Element => {
   const [portal, setPortal] = React.useState<HTMLDivElement>();
-  const {
-    offCanvasBody,
-    offCanvasIsVisible,
-    setOffCanvasBody,
-    toggleOffCanvasVisibility,
-  } = useUI();
+  const { showNavigation, setShowNavigation } = useAppStore();
   const router = useRouter();
 
   /** create dom element as portal mount */
@@ -62,25 +58,22 @@ export const OffCanvas = memo((): JSX.Element => {
 
   /** close off-canvas on route changes */
   const handleRouteChangeStart = React.useCallback(() => {
-    toggleOffCanvasVisibility(false);
-  }, [toggleOffCanvasVisibility]);
+    setShowNavigation(false);
+  }, [setShowNavigation]);
 
   /** close off-canvas */
   const handleClose = React.useCallback(
-    () => toggleOffCanvasVisibility(false),
-    [toggleOffCanvasVisibility]
+    () => setShowNavigation(false),
+    [setShowNavigation]
   );
 
   const handleKeyPress = React.useCallback(
     (event: KeyboardEvent) => {
-      if (
-        (event.key === 'Esc' || event.key === 'Escape') &&
-        offCanvasIsVisible
-      ) {
+      if ((event.key === 'Esc' || event.key === 'Escape') && showNavigation) {
         handleClose();
       }
     },
-    [handleClose, offCanvasIsVisible]
+    [handleClose, showNavigation]
   );
 
   /** bind route change events */
@@ -106,15 +99,15 @@ export const OffCanvas = memo((): JSX.Element => {
   /** disables page scrolling when off-canvas is open */
   React.useEffect(() => {
     if (isBrowser()) {
-      document.body.style.overflowY = offCanvasIsVisible ? 'hidden' : '';
+      document.body.style.overflowY = showNavigation ? 'hidden' : '';
     }
-  }, [offCanvasIsVisible]);
+  }, [showNavigation]);
 
   if (!portal) return null;
   return ReactDOM.createPortal(
     <LazyMotion features={domAnimation}>
       <AnimatePresence mode='wait' onExitComplete={handleClose}>
-        {offCanvasIsVisible && (
+        {showNavigation && (
           <motion.div
             initial='hide'
             animate='show'
@@ -130,7 +123,9 @@ export const OffCanvas = memo((): JSX.Element => {
               'z-40',
             ])}
           >
-            <FocusTrap>{offCanvasBody}</FocusTrap>
+            <FocusTrap>
+              <Navigation />
+            </FocusTrap>
           </motion.div>
         )}
       </AnimatePresence>

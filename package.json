@@ -16,10 +16,10 @@
     "chore:deduplicate": "yarn deduplicate",
     "chore:fix-mismatches": "syncpack fix-mismatches",
     "chore:set-versions": "set-versions --workspaces",
-    "dev": "dotenv -- turbo run dev --include-dependencies --parallel --continue",
-    "build": "dotenv -- turbo run build --include-dependencies",
+    "dev": "dotenv turbo run dev --include-dependencies --parallel --continue",
+    "build": "dotenv turbo run build --include-dependencies",
     "env": "DOPPLER_CONFIG=development_local doppler secrets download --format env --no-file > .env || true",
-    "sanity": "yarn dotenv -- yarn workspace studio sanity"
+    "sanity": "dotenv yarn workspace studio sanity"
   },
   "prettier": {
     "arrowParens": "always",

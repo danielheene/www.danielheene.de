@@ -1,15 +1,9 @@
-import { config } from 'dotenv';
-import findWorkspaceRoot from 'find-yarn-workspace-root';
-
 import { createConfig } from 'sanity';
 import { deskTool } from 'sanity/desk';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
 import { codeInput } from '@sanity/code-input';
 import { markdownSchema } from 'sanity-plugin-markdown';
 import { visionTool } from '@sanity/vision';
-
-// import { vercelWidget } from 'sanity-plugin-dashboard-widget-vercel';
-// import { dashboardTool } from '@sanity/dashboard';
 
 import { schemaTypes } from './schemas';
 import './overrides.css';
@@ -23,8 +17,8 @@ export default createConfig({
     icon?: React.ComponentType
   */
 
-  projectId: import.meta.env.SANITY_STUDIO_PROJECT_ID,
-  basePath: import.meta.env.SANITY_STUDIO_PROJECT_BASEPATH,
+  projectId: 'ekrchhx4',
+  basePath: '/studio',
   dataset: import.meta.env.SANITY_STUDIO_DATASET,
 
   document: {
@@ -50,9 +44,6 @@ export default createConfig({
   },
 
   plugins: [
-    // dashboardTool({
-    //   widgets: [vercelWidget()],
-    // }),
     deskTool({
       structure: (S) =>
         S.list()

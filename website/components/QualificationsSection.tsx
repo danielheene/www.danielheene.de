@@ -1,6 +1,9 @@
 import clsx from 'clsx';
 import { QualificationsSectionData, QualificationItemData } from '@lib/types';
 import { Card } from '@components/Card';
+import { SectionHeader } from '@components/SectionHeader';
+import { Section } from '@components/Section';
+import { useMemo } from 'react';
 
 interface QualificationEntryProps extends QualificationItemData {
   index: number;
@@ -15,18 +18,19 @@ const QualificationEntry = ({
   end,
   body,
 }: QualificationEntryProps): JSX.Element => {
-  const isEven = !!(index % 2);
   const isOdd = !(index % 2);
+
+  const spacer = useMemo(() => <div className='w-full lg:w-1/2' />, []);
 
   return (
     <>
-      {isEven && <div className='w-full lg:w-1/2 px-4' />}
+      {!isOdd && spacer}
       <div className='w-full lg:w-1/2 px-4'>
         <div
           className={clsx(
             [
-              'lg:max-w-[428px]',
-              'xl:max-w-[490px]',
+              'lg:max-w-[460px]',
+              'xl:max-w-[540px]',
               'w-full',
               'ml-auto',
               'pl-8',
@@ -34,12 +38,11 @@ const QualificationEntry = ({
               'lg:pl-0',
               'lg:pr-0',
               'relative',
-              'pb-16',
+              'pb-12',
             ],
             isOdd && ['lg:text-right', 'lg:mr-5'],
-            isEven && ['lg:ml-5'],
-            'text-white',
-            'glass'
+            !isOdd && ['lg:ml-5'],
+            'text-white'
           )}
         >
           <span
@@ -54,12 +57,14 @@ const QualificationEntry = ({
                 'bg-vibrant-deep-blue',
               ],
               isOdd && ['lg:left-auto', 'lg:-right-11'],
-              isEven && ['lg:-left-11']
+              !isOdd && ['lg:-left-11']
             )}
           />
           <Card variant='light' tilted>
-            <h3 className='font-semibold text-xl text-white mb-1'>{title}</h3>
-            <p className='font-semibold text-base text-gray-400 mb-3'>
+            <h3 className='font-syne font-bold text-3xl text-primary-700 mb-1'>
+              {title}
+            </h3>
+            <p className='font-syne font-semibold text-gray-200 mb-3'>
               {employer} | {location}
             </p>
             <span
@@ -84,88 +89,43 @@ const QualificationEntry = ({
           </Card>
         </div>
       </div>
-      {isOdd && <div className='w-full lg:w-1/2 px-4' />}
+      {isOdd && spacer}
     </>
   );
 };
 
 interface QualificationsSectionProps extends QualificationsSectionData {}
 
-export const QualificationsSection = ({
-  headline,
-  preHeadline,
-  subHeadline,
-  entries,
-}: QualificationsSectionProps): JSX.Element => {
+export const QualificationsSection = (
+  props: QualificationsSectionProps
+): JSX.Element => {
+  const { entries, header } = props;
+
   return (
-    <section className='pt-[120px] relative z-10'>
-      <div className='container'>
-        <div className='border-b border-[#E9ECF8] pb-[70px]'>
-          <div className='flex flex-wrap mx-[-16px]'>
-            <div className='w-full px-4'>
-              <div className='max-w-[600px] mx-auto text-center mb-[50px]'>
-                {preHeadline && (
-                  <span
-                    className={clsx([
-                      'font-semibold',
-                      'text-lg',
-                      'text-primary',
-                      'block',
-                      'mb-2',
-                    ])}
-                  >
-                    {preHeadline}
-                  </span>
-                )}
-                {headline && (
-                  <h2
-                    className={clsx([
-                      'font-bold',
-                      'text-black',
-                      'text-3xl',
-                      'sm:text-4xl',
-                      'md:text-[45px]',
-                      'mb-5',
-                    ])}
-                  >
-                    {headline}
-                  </h2>
-                )}
-                {subHeadline && (
-                  <p className={clsx(['font-medium', 'text-lg', 'text-white'])}>
-                    {subHeadline}
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
+    <Section>
+      <SectionHeader {...header} />
 
-          <div className='relative pt-12'>
-            <span
-              className={clsx([
-                'absolute',
-                'top-0',
-                'block',
-                'left-2',
-                'lg:left-1/2',
-                'w-[1px]',
-                'h-full',
-                'bg-[#d7dfff]',
-              ])}
-            />
-
-            <div className='flex flex-wrap -mx-4'>
-              {entries.map((resume, index) => (
-                <QualificationEntry
-                  key={resume._key}
-                  index={index}
-                  {...resume}
-                />
-              ))}
-            </div>
-          </div>
+      <div
+        className={clsx(
+          'relative',
+          'pt-12',
+          'before:content[" "]',
+          'before:absolute',
+          'before:top-0',
+          'before:block',
+          'before:left-2',
+          'before:lg:left-1/2',
+          'before:w-[1px]',
+          'before:h-full',
+          'before:bg-[#d7dfff]'
+        )}
+      >
+        <div className='flex flex-wrap -mx-4'>
+          {entries.map((resume, index) => (
+            <QualificationEntry key={resume._key} index={index} {...resume} />
+          ))}
         </div>
       </div>
-    </section>
+    </Section>
   );
 };

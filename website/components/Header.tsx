@@ -1,23 +1,26 @@
 import clsx from 'clsx';
-import { useEffect, useRef } from 'react';
-import { useUI } from '@lib/context';
+import { useRef } from 'react';
+import { useAppStore } from '@lib/app-context';
 import { Logo } from '@components/Logo';
 import { Box } from '@components/Box';
 import { MenuButton } from '@components/MenuButton';
+import { useOnResizeCallback } from '@lib/hooks';
 
-interface HeaderProps {}
-
-export const Header = (props: HeaderProps): JSX.Element => {
+export const Header = (): JSX.Element => {
   const headerRef = useRef<HTMLDivElement>();
-  const { setHeaderHeight } = useUI();
+  const { setHeaderHeight } = useAppStore();
 
-  useEffect(() => {
-    if (headerRef.current) {
-      const { width, height } = headerRef.current.getBoundingClientRect();
-      const { scrollWidth, scrollHeight } = headerRef.current;
-      console.log(width, height, scrollWidth, scrollHeight);
-    }
-  }, []);
+  useOnResizeCallback(
+    () => {
+      if (headerRef.current) {
+        const { height } = headerRef.current.getBoundingClientRect();
+        setHeaderHeight(height);
+        console.log('fired!');
+      }
+    },
+    [],
+    true
+  );
 
   return (
     <Box
@@ -33,14 +36,13 @@ export const Header = (props: HeaderProps): JSX.Element => {
         'p-6',
         '-translate-x-1/2',
         'left-1/2',
-        // 'sticky',
         'text-white',
+        'text-[50px]',
         'z-max',
       ])}
     >
-      <Logo />
-      {/*<nav>NAV</nav>*/}
-      <MenuButton />
+      <Logo size='text-header' />
+      <MenuButton className='text-header z-max' />
     </Box>
   );
 };

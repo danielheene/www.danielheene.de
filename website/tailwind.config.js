@@ -1,5 +1,6 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -164,75 +165,19 @@ module.exports = {
         'fit': 'fit-content',
       }),
       minWidth: ({ theme }) => ({
-        0: '0px',
         ...theme('width'),
-        full: '100%',
-        min: 'min-content',
-        max: 'max-content',
-        fit: 'fit-content',
       }),
-      maxWidth: ({ theme, breakpoints }) => ({
-        'none': 'none',
+      maxWidth: ({ theme }) => ({
         ...theme('width'),
-        '0': '0rem',
-        'xs': '20rem',
-        'sm': '24rem',
-        'md': '28rem',
-        'lg': '32rem',
-        'xl': '36rem',
-        '2xl': '42rem',
-        '3xl': '48rem',
-        '4xl': '56rem',
-        '5xl': '64rem',
-        '6xl': '72rem',
-        '7xl': '80rem',
-        'full': '100%',
-        'min': 'min-content',
-        'max': 'max-content',
-        'fit': 'fit-content',
-        'prose': '65ch',
-        ...breakpoints(theme('screens')),
       }),
       height: ({ theme }) => ({
-        'auto': 'auto',
         ...theme('spacing'),
-        '1/2': '50%',
-        '1/3': '33.333333%',
-        '2/3': '66.666667%',
-        '1/4': '25%',
-        '2/4': '50%',
-        '3/4': '75%',
-        '1/5': '20%',
-        '2/5': '40%',
-        '3/5': '60%',
-        '4/5': '80%',
-        '1/6': '16.666667%',
-        '2/6': '33.333333%',
-        '3/6': '50%',
-        '4/6': '66.666667%',
-        '5/6': '83.333333%',
-        'full': '100%',
-        'screen': '100vh',
-        'min': 'min-content',
-        'max': 'max-content',
-        'fit': 'fit-content',
       }),
       minHeight: ({ theme }) => ({
         ...theme('height'),
-        0: '0px',
-        full: '100%',
-        screen: '100vh',
-        min: 'min-content',
-        max: 'max-content',
-        fit: 'fit-content',
       }),
       maxHeight: ({ theme }) => ({
         ...theme('height'),
-        full: '100%',
-        screen: '100vh',
-        min: 'min-content',
-        max: 'max-content',
-        fit: 'fit-content',
       }),
       container: ({ theme, breakpoints }) => {
         // only assign last breakpoint for enabling a fluid container
@@ -253,13 +198,13 @@ module.exports = {
         ...theme('spacing'),
       }),
       colors: {
-        inherit: 'inherit',
-        current: 'currentColor',
-        transparent: 'transparent',
-        black: '#000',
-        white: '#fff',
+        'inherit': 'inherit',
+        'current': 'currentColor',
+        'transparent': 'transparent',
+        'black': '#000',
+        'white': '#fff',
 
-        primary: {
+        'primary': {
           DEFAULT: '#7A57F5',
           50: '#FFFFFF',
           100: '#F4F1FE',
@@ -273,102 +218,157 @@ module.exports = {
           900: '#1B0665',
         },
 
-        slate: {
+        'terracotta': {
+          DEFAULT: '#E77D60',
+          50: '#FFFFFF',
+          100: '#FCF1EE',
+          200: '#F7D4CA',
+          300: '#F2B7A7',
+          400: '#EC9A83',
+          500: '#E77D60',
+          600: '#E0552F',
+          700: '#BB3E1C',
+          800: '#8A2E15',
+          900: '#591E0D',
+        },
+
+        'purple-heart': {
+          DEFAULT: '#7126AF',
+          50: '#CAA2EB',
+          100: '#C091E7',
+          200: '#AD70E0',
+          300: '#9A4ED9',
+          400: '#872DD1',
+          500: '#7126AF',
+          600: '#531C81',
+          700: '#351253',
+          800: '#180825',
+          900: '#000000',
+        },
+
+        'rose': {
+          DEFAULT: '#EA33DF',
+          50: '#FBD9F9',
+          100: '#F9C7F6',
+          200: '#F5A2F0',
+          300: '#F27DEB',
+          400: '#EE58E5',
+          500: '#EA33DF',
+          600: '#D015C4',
+          700: '#9D1094',
+          800: '#6A0B64',
+          900: '#370634',
+        },
+
+        'slate': {
           DEFAULT: colors.slate['500'],
           ...colors.slate,
         },
-        gray: {
+        'gray': {
           DEFAULT: colors.gray['500'],
           ...colors.gray,
         },
-        zinc: {
+        'zinc': {
           DEFAULT: colors.zinc['500'],
           ...colors.zinc,
         },
-        neutral: {
+        'neutral': {
           DEFAULT: colors.neutral['500'],
           ...colors.neutral,
         },
-        stone: {
+        'stone': {
           DEFAULT: colors.stone['500'],
           ...colors.stone,
         },
-        red: {
+        'red': {
           DEFAULT: colors.red['500'],
           ...colors.red,
         },
-        orange: {
+        'orange': {
           DEFAULT: colors.orange['500'],
           ...colors.orange,
         },
-        amber: {
+        'amber': {
           DEFAULT: colors.amber['500'],
           ...colors.amber,
         },
-        yellow: {
+        'yellow': {
           DEFAULT: colors.yellow['500'],
           ...colors.yellow,
         },
-        lime: {
+        'lime': {
           DEFAULT: colors.lime['500'],
           ...colors.lime,
         },
-        green: {
+        'green': {
           DEFAULT: colors.green['500'],
           ...colors.green,
         },
-        emerald: {
+        'emerald': {
           DEFAULT: colors.emerald['500'],
           ...colors.emerald,
         },
-        teal: {
+        'teal': {
           DEFAULT: colors.teal['500'],
           ...colors.teal,
         },
-        cyan: {
+        'cyan': {
           DEFAULT: colors.cyan['500'],
           ...colors.cyan,
         },
-        sky: {
+        'sky': {
           DEFAULT: colors.sky['500'],
           ...colors.sky,
         },
-        blue: {
+        'blue': {
           DEFAULT: colors.blue['500'],
           ...colors.blue,
         },
-        indigo: {
+        'indigo': {
           DEFAULT: colors.indigo['500'],
           ...colors.indigo,
         },
-        violet: {
+        'violet': {
           DEFAULT: colors.violet['500'],
           ...colors.violet,
         },
-        purple: {
+        'purple': {
           DEFAULT: colors.purple['500'],
           ...colors.purple,
         },
-        fuchsia: {
+        'fuchsia': {
           DEFAULT: colors.fuchsia['500'],
           ...colors.fuchsia,
         },
-        pink: {
+        'pink': {
           DEFAULT: colors.pink['500'],
           ...colors.pink,
-        },
-        rose: {
-          DEFAULT: colors.rose['500'],
-          ...colors.rose,
         },
       },
       fontFamily: {
         'sans': ['Inter', ...defaultTheme.fontFamily.sans],
+        'mono': ['Space Mono', ...defaultTheme.fontFamily.sans],
         'inter': ['Inter', ...defaultTheme.fontFamily.sans],
-        'syne': ['Syne', ...defaultTheme.fontFamily.sans],
+        'inter-tight': ['Inter Tight', ...defaultTheme.fontFamily.sans],
+        'recursive': ['Recursive', ...defaultTheme.fontFamily.sans],
         'space-grotesk': ['Space Grotesk', ...defaultTheme.fontFamily.sans],
+        'space-mono': ['Space Mono', ...defaultTheme.fontFamily.sans],
+        'syne': ['Syne', ...defaultTheme.fontFamily.sans],
       },
       fontSize: {
+        'xs': ['0.75rem', '1rem'],
+        'sm': ['0.875rem', '1.25rem'],
+        'base': ['1rem', '1.5rem'],
+        'lg': ['1.125rem', '1.75rem'],
+        'xl': ['1.25rem', '1.75rem'],
+        '2xl': ['1.5rem', '2rem'],
+        '3xl': ['1.875rem', '2.25rem'],
+        '4xl': ['2.25rem', '2.5rem'],
+        '5xl': ['3rem', '1'],
+        '6xl': ['3.75rem', '1'],
+        '7xl': ['4.5rem', '1'],
+        '8xl': ['6rem', '1'],
+        '9xl': ['8rem', '1'],
         '10xl': ['10rem', '1'],
         '11xl': ['11rem', '1'],
         '12xl': ['12rem', '1'],
@@ -376,6 +376,7 @@ module.exports = {
         '14xl': ['14rem', '1'],
         '15xl': ['15rem', '1'],
         '16xl': ['16rem', '1'],
+        'header': ['4rem', '1'],
       },
       keyframes: {
         'fade-in': {
@@ -395,6 +396,29 @@ module.exports = {
   },
   variants: {},
   plugins: [
+    plugin(function ({ addBase, addComponents, theme }) {
+      addBase({
+        h1: { fontSize: theme('fontSize.2xl') },
+        h2: { fontSize: theme('fontSize.xl') },
+        h3: { fontSize: theme('fontSize.lg') },
+      });
+      addComponents({
+        '.glass': {
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 0 5px rgba(0, 0, 0, 0.3)',
+          color: 'rgba(255, 255, 255, 1)',
+          userSelect: 'none',
+        },
+        '.glass-light': {
+          background: 'rgba(255, 255, 255, 0.35)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+        },
+        '.glass-dark': {
+          background: 'rgba(0, 0, 0, 0.1)',
+          border: '1px solid rgba(0, 0, 0, 0.1)',
+        },
+      });
+    }),
     require('@tailwindcss/forms'),
     require('@tailwindcss/line-clamp'),
     require('@tailwindcss/typography'),

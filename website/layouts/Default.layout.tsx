@@ -13,9 +13,7 @@ export function DefaultLayout({ children, seo }: DefaultLayoutProps) {
   return (
     <>
       <Header />
-      <main className='flex flex-col h-screen max-h-screen overflow-scroll'>
-        {children}
-      </main>
+      <main className='flex flex-col min-h-screen'>{children}</main>
     </>
   );
 }

@@ -9,7 +9,9 @@ interface LogoCloudItemProps extends LogoCloudItemData {}
 
 const LogoCloudItem = memo(
   forwardRef(
-    ({ image }: LogoCloudItemProps, ref: Ref<HTMLDivElement>): JSX.Element => {
+    (props: LogoCloudItemProps, ref: Ref<HTMLDivElement>): JSX.Element => {
+      const { image } = props;
+
       return (
         <>
           <Card
@@ -47,10 +49,10 @@ const LogoCloudItem = memo(
 interface LogoCloudProps extends LogoCloudSectionData {}
 
 export const LogoCloudSection = memo(
-  ({ sectionHeader, entries }: LogoCloudProps): JSX.Element => {
+  ({ header, entries }: LogoCloudProps): JSX.Element => {
     return (
-      <Section>
-        <SectionHeader {...sectionHeader} />
+      <Section fullWidth>
+        <SectionHeader {...header} />
         <Marquee>
           {entries && entries.map((e, i) => <LogoCloudItem key={i} {...e} />)}
         </Marquee>

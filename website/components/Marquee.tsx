@@ -57,26 +57,26 @@ export const Marquee = memo(
             overflow: hidden;
           }
 
-          .marquee::before,
-          .marquee::after {
-            content: ' ';
-            display: block;
-            width: 50px;
-            position: absolute;
-            top: 0;
-            height: 100%;
-            z-index: 1;
-          }
+          //.marquee::before,
+          //.marquee::after {
+          //  content: ' ';
+          //  display: block;
+          //  width: 50px;
+          //  position: absolute;
+          //  top: 0;
+          //  height: 100%;
+          //  z-index: 1;
+          //}
 
-          .marquee::before {
-            left: 0;
-            background-image: linear-gradient(to right, black, transparent);
-          }
-
-          .marquee::after {
-            left: calc(100% - 50px);
-            background-image: linear-gradient(to right, transparent, black);
-          }
+          //.marquee::before {
+          //  left: 0;
+          //  background-image: linear-gradient(to right, black, transparent);
+          //}
+          //
+          //.marquee::after {
+          //  left: calc(100% - 50px);
+          //  background-image: linear-gradient(to right, transparent, black);
+          //}
 
           .marquee :global(.marquee-inner) {
             position: relative;
@@ -88,8 +88,7 @@ export const Marquee = memo(
           }
 
           .marquee :global(.marquee-item) {
-            margin-left: 0.5rem !important;
-            margin-right: 0.5rem !important;
+            margin: 1rem !important;
             flex-shrink: 0 !important;
             flex-grow: 0 !important;
             width: 16rem;

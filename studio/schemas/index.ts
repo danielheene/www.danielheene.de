@@ -6,7 +6,9 @@ import externalLink from './objects/object.externalLink';
 import internalLink from './objects/object.internalLink';
 import navigationItem from './objects/object.navigationItem';
 import sectionHeader from './objects/object.sectionHeader';
+import serviceItem from './objects/object.serviceItem';
 import sectionLogoCloud from './objects/section.logoCloud';
+import sectionServices from './objects/section.services';
 import sectionQualifications from './objects/section.qualifications';
 
 import project from './documents/document.project';
@@ -25,7 +27,9 @@ export const schemaTypes = [
   internalLink,
   navigationItem,
   sectionHeader,
+  serviceItem,
   sectionLogoCloud,
+  sectionServices,
   sectionQualifications,
 
   /* documents */

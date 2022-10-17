@@ -8,26 +8,7 @@ import {
 } from 'react';
 import clsx, { ClassValue } from 'clsx';
 import * as React from 'react';
-import css from 'styled-jsx/css';
 import ReactParallaxTilt from 'react-parallax-tilt';
-
-const { className: rootClassName, styles: rootStyles } = css.resolve`
-  .card {
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.25);
-  }
-
-  .card.card-light {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 1);
-  }
-  .card.card-dark {
-    background: rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    color: rgba(255, 255, 255, 1);
-  }
-`;
 
 interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
   className?: ClassValue;
@@ -42,31 +23,33 @@ interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
 export const Card = forwardRef(
   (
     {
+      children,
       className,
       variant = 'light',
       container = false,
       tilted = false,
-      children,
       radius = true,
-      ...rest
+      ...otherProps
     }: CardProps,
     ref: RefObject<HTMLDivElement>
   ): JSX.Element => {
     const mainComponent = useMemo(
       () => (
         <Box
-          {...rest}
+          ref={ref}
+          {...otherProps}
           className={clsx(
-            rootClassName,
-            'card',
-            variant === 'light' && 'card-light',
-            variant === 'dark' && 'card-dark',
-            container && 'container',
-            radius && 'rounded-2xl',
-            !container && 'p-2',
+            [
+              (variant === 'light' || variant === 'dark') && 'glass',
+              variant === 'light' && 'glass-light',
+              variant === 'dark' && 'glass-dark',
+              container && 'container',
+              radius && 'rounded-lg',
+              !container && 'p-6',
+            ],
             className
           )}
-          ref={ref}
+          // ref={ref}
         >
           {children}
         </Box>
@@ -74,28 +57,23 @@ export const Card = forwardRef(
       [children, className, variant, container]
     );
 
-    return (
-      <>
-        {tilted ? (
-          <ReactParallaxTilt
-            perspective={1400}
-            transitionSpeed={600}
-            tiltMaxAngleX={10}
-            tiltMaxAngleY={10}
-            tiltReverse
-            glareEnable
-            glarePosition='all'
-            glareMaxOpacity={0.1}
-            glareColor='#987DF7'
-            className='rounded-2xl overflow-hidden'
-          >
-            {mainComponent}
-          </ReactParallaxTilt>
-        ) : (
-          mainComponent
-        )}
-        {rootStyles}
-      </>
+    return tilted ? (
+      <ReactParallaxTilt
+        perspective={1400}
+        transitionSpeed={600}
+        tiltMaxAngleX={10}
+        tiltMaxAngleY={10}
+        tiltReverse
+        glareEnable
+        glarePosition='all'
+        glareMaxOpacity={0.1}
+        glareColor='#987DF7'
+        className='rounded-lg overflow-hidden'
+      >
+        {mainComponent}
+      </ReactParallaxTilt>
+    ) : (
+      mainComponent
     );
   }
 );

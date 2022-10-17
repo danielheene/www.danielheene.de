@@ -4,20 +4,37 @@ import { Box } from '@components/Box';
 
 interface SectionProps {
   children: ReactNode | ReactNode[];
-  noFullWidth?: boolean;
-  backgroundColor?: string;
+  fullWidth?: boolean;
 }
 
 export const Section = (props: SectionProps): JSX.Element => {
-  const { children, noFullWidth, backgroundColor } = props;
-
-  const [containerClassNames, wrapperClassNames] = useMemo(() => {
-    return [clsx('w-screen', 'py-', 'md:px-8', 'mx-auto'), clsx([])];
-  }, []);
+  const { children, fullWidth = false } = props;
 
   return (
-    <Box as='section' className={containerClassNames}>
-      <Box className={wrapperClassNames}>{children}</Box>
-    </Box>
+    <>
+      <Box
+        as='section'
+        className={clsx('section', 'relative', 'z-1', 'w-screen', 'mx-auto')}
+      >
+        <Box className={clsx('section-container', !fullWidth && 'container')}>
+          {children}
+        </Box>
+      </Box>
+      <style jsx>
+        {`
+          :global(.section) {
+            padding-bottom: 120px;
+          }
+
+          :global(.section) + :global(.section) {
+            padding-top: 120px;
+          }
+
+          :global(.section) + :global(.section) > :global(.section-container) {
+            border-top: 1px solid #e9ecf8;
+          }
+        `}
+      </style>
+    </>
   );
 };

@@ -16,7 +16,7 @@ export default defineType({
   fields: [
     defineField({
       title: 'Section Header',
-      name: 'sectionHeader',
+      name: 'header',
       type: 'sectionHeader',
     }),
     defineField({
@@ -29,23 +29,21 @@ export default defineType({
           type: 'object',
           fields: [
             defineField({
+              title: 'Published',
+              name: 'published',
+              type: 'boolean',
+              initialValue: true,
+            }),
+            defineField({
+              title: 'Name',
+              name: 'name',
+              type: 'string',
+              initialValue: '',
+            }),
+            defineField({
               title: 'Logo',
               name: 'image',
               type: 'image',
-              fields: [
-                defineField({
-                  title: 'Published',
-                  name: 'published',
-                  type: 'boolean',
-                  initialValue: true,
-                }),
-                defineField({
-                  title: 'Name',
-                  name: 'name',
-                  type: 'string',
-                  initialValue: '',
-                }),
-              ],
             }),
           ],
           components: {
@@ -53,11 +51,11 @@ export default defineType({
           },
           preview: {
             select: {
-              name: 'image.name',
+              name: 'name',
               imageUrl: 'image.asset.url',
               dimensions: 'image.asset.metadata.dimensions',
               fileSize: 'image.asset.size',
-              published: 'image.published',
+              published: 'published',
             },
             prepare({ name, imageUrl, published, dimensions, fileSize }) {
               const pixels = !!dimensions

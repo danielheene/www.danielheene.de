@@ -20,7 +20,7 @@
   }
 
   html, body, #__next {
-    @apply flex flex-col h-screen w-screen overflow-hidden;
+    @apply flex flex-col min-h-screen w-screen;
   }
 
   ::selection {
@@ -44,9 +44,4 @@
   .portable-text strong {
     @apply font-bolder
   }
-}
-
-
-#nprogress > .bar {
-  @apply h-1 bg-primary-500;
 }

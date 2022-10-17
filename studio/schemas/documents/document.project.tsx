@@ -4,7 +4,7 @@ import { deburr, kebabCase } from 'lodash';
 
 export default defineType({
   type: 'document',
-  name: 'project',
+  name: 'project.document',
   title: 'Project',
   groups: [
     {

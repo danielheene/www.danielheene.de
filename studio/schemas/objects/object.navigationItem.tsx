@@ -79,7 +79,7 @@ export default defineType({
       name: 'ref',
       type: 'reference',
       initialValue: {},
-      to: [{ type: 'home' }, { type: 'project' }],
+      to: [{ type: 'home' }, { type: 'project.document' }],
       hidden: ({ parent }) => parent?.type !== 'internal',
       options: {
         disableNew: true,

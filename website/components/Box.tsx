@@ -1,20 +1,36 @@
-import * as React from 'react';
+/**
+ * polymorphic Box component
+ * inspired by the following article
+ *
+ * article:     https://blog.logrocket.com/build-strongly-typed-polymorphic-components-react-typescript/
+ * repository:  https://github.com/ohansemmanuel/polymorphic-react-component
+ */
 
-export type BoxOwnProps<E extends React.ElementType = React.ElementType> = {
-  as?: E;
-};
-
-export type BoxProps<E extends React.ElementType> = BoxOwnProps<E> &
-  Omit<React.ComponentProps<E>, keyof BoxOwnProps>;
+import React from 'react';
+import { PolymorphicComponentPropWithRef, PolymorphicRef } from '@lib/types';
 
 const defaultElement = 'div';
 
-export const Box: <E extends React.ElementType = typeof defaultElement>(
-  props: BoxProps<E>
-) => React.ReactElement | null = React.forwardRef(function Box(
-  props: BoxOwnProps,
-  ref: React.Ref<Element>
-) {
-  const Element = props.as || defaultElement;
-  return <Element ref={ref} {...props} as={undefined} />;
-});
+type BoxProps<C extends React.ElementType> = PolymorphicComponentPropWithRef<
+  C,
+  { color?: string | 'black' }
+>;
+
+type BoxComponent = <C extends React.ElementType = typeof defaultElement>(
+  props: BoxProps<C>
+) => React.ReactElement | null;
+
+export const Box: BoxComponent = React.forwardRef(
+  <C extends React.ElementType = typeof defaultElement>(
+    { as, children, ...otherProps }: BoxProps<C>,
+    ref?: PolymorphicRef<C>
+  ) => {
+    const Component = as || defaultElement;
+
+    return (
+      <Component ref={ref} {...otherProps}>
+        {children}
+      </Component>
+    );
+  }
+);

@@ -12,7 +12,7 @@ export default defineType({
   fields: [
     defineField({
       title: 'Section Header',
-      name: 'sectionHeader',
+      name: 'header',
       type: 'sectionHeader',
     }),
     defineField({
@@ -22,8 +22,8 @@ export default defineType({
       of: [
         defineArrayMember({
           title: 'Service Feature',
-          name: 'serviceFeature',
-          type: 'serviceFeature',
+          name: 'serviceItem',
+          type: 'block.serviceItem',
         }),
       ],
     }),

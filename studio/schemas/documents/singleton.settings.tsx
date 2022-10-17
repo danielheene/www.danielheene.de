@@ -24,37 +24,41 @@ export default defineType({
   }),
   groups: [
     {
+      title: 'Main',
+      name: 'main',
+      default: true,
+    },
+    {
       title: 'Meta',
       name: 'meta',
     },
   ],
   fields: [
     defineField({
-      title: 'Page Title',
-      name: 'pageTitle',
-      type: 'string',
-    }),
-    defineField({
       title: 'hireMe',
       name: 'hireMe',
       type: 'boolean',
+      group: 'main',
       initialValue: false,
     }),
     defineField({
       title: 'Contact Services',
       name: 'contactServices',
       type: 'contactServices',
+      group: 'main',
     }),
     defineField({
       title: 'Resume / CV',
       name: 'resume',
       type: 'file',
+      group: 'main',
       fieldset: COL_FIELDSET_NAME['6-6'],
     }),
     defineField({
       title: 'Public Signature / GPG Key',
       name: 'publicKey',
       type: 'file',
+      group: 'main',
       fieldset: COL_FIELDSET_NAME['6-6'],
     }),
     defineField({
@@ -65,4 +69,9 @@ export default defineType({
     }),
   ],
   fieldsets: [...COL_FIELDSETS],
+  preview: {
+    prepare: () => ({
+      title: 'Settings',
+    }),
+  },
 });

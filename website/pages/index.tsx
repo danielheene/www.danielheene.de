@@ -1,21 +1,26 @@
 import React from 'react';
-import { differenceInYears } from 'date-fns';
 import { GetStaticProps } from 'next';
-import traverse from 'traverse';
 
 import { DefaultLayout } from '@layouts/Default.layout';
 import Sanity from '@lib/sanity';
 import { groq } from 'next-sanity';
 import { QualificationsSection } from '@components/QualificationsSection';
 import { LogoCloudSection } from '@components/LogoCloudSection';
-import { LogoCloudSectionData, QualificationsSectionData } from '@lib/types';
-import { HireMeMemoji } from '@components/HireMeMemoji';
-import { Stage } from '@components/Stage';
+import {
+  HeroStageData,
+  LogoCloudSectionData,
+  QualificationsSectionData,
+  ServicesSectionData,
+} from '@lib/types';
+import { HeroStage } from '@components/HeroStage';
+import { ServicesSection } from '@components/ServicesSection';
 
-interface Data {
+interface HomeData {
   introLine: string;
+  services: ServicesSectionData;
   qualifications: QualificationsSectionData;
   logoCloud: LogoCloudSectionData;
+  heroStage: HeroStageData;
 }
 
 interface Settings {
@@ -30,68 +35,25 @@ interface Settings {
   };
 }
 
-interface Props extends Data {
-  data: Data;
+interface Props extends HomeData {
+  data: HomeData;
   settings: Settings;
 }
 
 export default function HomePage({ data, settings }: Props) {
-  const { introLine, qualifications, logoCloud } = data;
-  const { hireMe } = settings;
+  const { heroStage, qualifications, logoCloud, services } = data;
+  // const { hireMe } = settings;
 
-  const today = new Date();
-  const birthday = new Date('1988-04-17');
-  const age = differenceInYears(today, birthday);
+  console.log(data);
 
   return (
     <DefaultLayout>
-      <Stage>
-        <div>
-          {introLine && (
-            <h1 className='text-white text-5xl sm:text-6xl md:text-6xl lg:text-8xl tracking-tight font-extrabold'>
-              {introLine}
-              {/*Hey <Wave>👋</Wave> I'm Daniel, <br className='hidden sm:block' />*/}
-              {/*a JavaScript engineer*/}
-            </h1>
-          )}
-          <p className='max-w-xs mt-4 md:mt-8 mx-auto text-base text-gray-300 sm:text-lg md:text-xl md:max-w-3xl font-semibold'>
-            I am a {age} year old javascript engineer & modular synthesizer
-            enthusiast.
-          </p>
-        </div>
-        <div>IMAGE!!</div>
-      </Stage>
-      <div className='min-h-screen flex items-center justify-center py-12'>
-        <div className='max-w-md sm:max-w-lg md:sm:max-w-2xl lg:sm:max-w-3xl w-full space-y-8 text-center'>
-          {/*<Transition duration={1000}>*/}
+      {heroStage && <HeroStage {...heroStage} />}
 
-          <div className='flex flex-col sm:flex-row items-center justify-center'>
-            {/*{ACTIONS.map((action, index) => {*/}
-            {/*  if (action.type !== NavigationItemType.LINK) return null;*/}
-
-            {/*  return (*/}
-            {/*    // <Transition*/}
-            {/*    //   delay={1000 + index * 100}*/}
-            {/*    //   key={index}*/}
-            {/*    //   duration={1000}*/}
-            {/*    // >*/}
-            {/*    <Button.Outline*/}
-            {/*      key={index}*/}
-            {/*      href={action.href}*/}
-            {/*      external={action.external}*/}
-            {/*    >*/}
-            {/*      {action.icon}*/}
-            {/*      <span className='my-0 py-1'>{action.text}</span>*/}
-            {/*    </Button.Outline>*/}
-            {/*    // </Transition>*/}
-            {/*  );*/}
-            {/*})}*/}
-          </div>
-        </div>
-        {hireMe && <HireMeMemoji />}
-      </div>
+      <ServicesSection {...services} />
       <QualificationsSection {...qualifications} />
       <LogoCloudSection {...logoCloud} />
+      {/*{hireMe && <HireMeMemoji />}*/}
     </DefaultLayout>
   );
 }
@@ -99,7 +61,24 @@ export default function HomePage({ data, settings }: Props) {
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
   const query = groq`
     {
-      "data": *[_type == "home"][0],
+      "data": *[_type == "home"][0] {
+        ...,
+        heroStage {
+          ...,
+          portrait { ..., ...asset-> },
+        },
+        services {
+          ...
+        },
+        logoCloud {
+          ...,
+          entries[published == true] {
+            ...,
+            image { ..., ...asset-> },
+          }
+        }
+      },
+      "navigations": *[_type == "navigation"],
       "settings": *[_type == "settings" && _id == "settings"][0] {
         ...,
         "publicKey": publicKey.asset->,
@@ -107,15 +86,10 @@ export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
       },
     }
   `;
-  const [sanity, urlFor] = Sanity.getClient(preview);
-  const sanityData = await sanity.fetch(query);
+  const SanityClient = Sanity.getClient(preview);
+  const { data, settings } = await SanityClient.fetch(query);
 
-  const { data, settings } = traverse(sanityData).forEach(function (data) {
-    if (data?._type === 'image' || data?._type === 'file') {
-      const url = urlFor(data);
-      this.update({ ...data, url });
-    }
-  });
+  // console.log(JSON.stringify(data, null, 2));
 
   return {
     props: {

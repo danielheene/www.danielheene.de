@@ -1,5 +1,7 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
 import { COL_FIELDSET_NAME, COL_FIELDSETS } from '../_constants';
+import { SanityPreviewWithPublishedLabel } from '../../components';
+import { Icon } from '@iconify/react';
 
 export default defineType({
   title: 'Qualification',
@@ -13,7 +15,7 @@ export default defineType({
   fields: [
     defineField({
       title: 'Section Header',
-      name: 'sectionHeader',
+      name: 'header',
       type: 'sectionHeader',
     }),
     defineField({
@@ -25,8 +27,14 @@ export default defineType({
           title: 'Qualification Block',
           name: 'block.qualification',
           type: 'object',
-          fieldsets: [...COL_FIELDSETS],
+          options: {},
           fields: [
+            defineField({
+              title: 'Published',
+              name: 'published',
+              type: 'boolean',
+              initialValue: true,
+            }),
             defineField({
               title: 'Job Title',
               name: 'title',
@@ -63,11 +71,22 @@ export default defineType({
               rows: 6,
             }),
           ],
+          fieldsets: COL_FIELDSETS,
+          components: {
+            preview: SanityPreviewWithPublishedLabel,
+          },
           preview: {
             select: {
               title: 'title',
               subtitle: 'employer',
+              published: 'published',
             },
+            prepare: ({ title, subtitle, published }) => ({
+              title,
+              subtitle,
+              published,
+              media: <Icon icon='ci:code' />,
+            }),
           },
         }),
       ],
