@@ -22,7 +22,7 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '16'
+          node-version: '16'
           cache: 'npm'
 
       - name: install sanity cli
