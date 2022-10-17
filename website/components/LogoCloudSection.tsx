@@ -1,11 +1,12 @@
-import { forwardRef, memo, Ref, useEffect, useRef, useState } from 'react';
-import { LogoCloudItemData, LogoCloudSectionData } from '@lib/types';
+import { forwardRef, memo, Ref } from 'react';
+
 import { Card } from '@components/Card';
 import { Marquee } from '@components/Marquee';
-import { SectionHeader } from '@components/SectionHeader';
 import { Section } from '@components/Section';
+import { SectionHeader } from '@components/SectionHeader';
+import { LogoCloudItemData, LogoCloudSectionData } from '@lib/types';
 
-interface LogoCloudItemProps extends LogoCloudItemData {}
+type LogoCloudItemProps = LogoCloudItemData;
 
 const LogoCloudItem = memo(
   forwardRef(
@@ -46,7 +47,7 @@ const LogoCloudItem = memo(
   )
 );
 
-interface LogoCloudProps extends LogoCloudSectionData {}
+type LogoCloudProps = LogoCloudSectionData;
 
 export const LogoCloudSection = memo(
   ({ header, entries }: LogoCloudProps): JSX.Element => {

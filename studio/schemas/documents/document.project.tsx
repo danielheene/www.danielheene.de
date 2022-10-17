@@ -1,10 +1,10 @@
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
+
 import { COL_FIELDSET_NAME, COL_FIELDSETS } from '../_constants';
-import { deburr, kebabCase } from 'lodash';
 
 export default defineType({
   type: 'document',
-  name: 'project.document',
+  name: 'project',
   title: 'Project',
   groups: [
     {
@@ -39,7 +39,7 @@ export default defineType({
       name: 'resources',
       type: 'array',
       of: [
-        defineArrayMember({
+        {
           name: 'resource',
           type: 'object',
           fields: [
@@ -54,7 +54,7 @@ export default defineType({
               type: 'url',
             }),
           ],
-        }),
+        },
       ],
     }),
     defineField({

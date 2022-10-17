@@ -5,12 +5,11 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { set, unset } from 'sanity/form';
-import { ObjectSchemaTypeWithOptions } from 'sanity';
-import { Grid, Stack, TextInput, Code, Box } from '@sanity/ui';
 import { Icon } from '@iconify/react';
-
+import { Box,Code, Grid, Stack, TextInput } from '@sanity/ui';
 import { defaults, isEqual } from 'lodash';
+import { ObjectSchemaTypeWithOptions } from 'sanity';
+import { set, unset } from 'sanity/form';
 import styled from 'styled-components';
 
 type ContactProvider =
@@ -200,7 +199,7 @@ export const ContactServicesInput = forwardRef(
         if (!ref) return;
         const name = ref.dataset.provider as ContactProvider;
         const numWidth = ref.getBoundingClientRect().width;
-        const width = !!numWidth ? `${numWidth.toFixed(2)}px` : null;
+        const width = numWidth ? `${numWidth.toFixed(2)}px` : null;
 
         if (width && labelSizes[name] !== width) {
           setLabelSizes((widths) => ({

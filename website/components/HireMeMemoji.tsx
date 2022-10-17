@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import React, { memo } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import Image from 'next/image';
 import clsx from 'clsx';
 
-export const HireMeMemoji = memo((): JSX.Element => {
+export const HireMeMemoji = React.memo((): JSX.Element => {
   const portalRef = React.useRef<HTMLDivElement>(null);
   const [showMemoji, setShowMemoji] = React.useState(false);
   const [showText, setShowText] = React.useState(false);
@@ -35,6 +35,7 @@ export const HireMeMemoji = memo((): JSX.Element => {
                 src='/memoji_whisper.webp'
                 width={500}
                 height={500}
+                alt='Memoji Image'
                 onAnimationEnd={() => setShowText(true)}
               />
             )}

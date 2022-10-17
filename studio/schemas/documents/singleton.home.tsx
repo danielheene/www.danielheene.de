@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+
 import { COL_FIELDSET_NAME, COL_FIELDSETS } from '../_constants';
 
 export default defineType({

@@ -9,7 +9,7 @@
     "build": "sanity build ../website/public/studio -y"
   },
   "dependencies": {
-    "@iconify/react": "^3.2.2",
+    "@iconify/react": "4.0.0",
     "@sanity/code-input": "studio-v3",
     "@sanity/ui": "next",
     "@sanity/vision": "dev-preview",

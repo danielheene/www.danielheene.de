@@ -1,7 +1,8 @@
-import { defineArrayMember, defineField, defineType } from 'sanity';
-import { COL_FIELDSETS } from '../_constants';
 import byteSize from 'byte-size';
+import { defineField, defineType } from 'sanity';
+
 import { SanityPreviewWithPublishedLabel } from '../../components';
+import { COL_FIELDSETS } from '../_constants';
 
 export default defineType({
   title: 'Logo Cloud',
@@ -24,7 +25,7 @@ export default defineType({
       name: 'entries',
       type: 'array',
       of: [
-        defineArrayMember({
+        {
           name: 'block.logoCloudItem',
           type: 'object',
           fields: [
@@ -57,23 +58,35 @@ export default defineType({
               fileSize: 'image.asset.size',
               published: 'published',
             },
-            prepare({ name, imageUrl, published, dimensions, fileSize }) {
-              const pixels = !!dimensions
-                ? `${dimensions.width}x${dimensions.height}`
-                : '';
-              const size = !!fileSize ? byteSize(fileSize) : '';
+            prepare({
+              name,
+              imageUrl,
+              published,
+              dimensions,
+              fileSize,
+            }: {
+              name: string;
+              imageUrl: string;
+              published: boolean;
+              dimensions: { width: number; height: number };
+              fileSize: number;
+            }) {
+              const { width, height } = dimensions || {};
+              const pixels = `${width}x${height}`;
+              const size = fileSize ? byteSize(fileSize as number) : '';
 
               return {
                 title: name,
                 subtitle: !!pixels && !!size ? `${pixels} • ${size}` : '',
                 media: (
+                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={imageUrl} style={{ background: 'white' }} alt='' />
                 ),
                 published,
               };
             },
           },
-        }),
+        },
       ],
     }),
   ],

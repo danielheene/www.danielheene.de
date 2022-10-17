@@ -1,8 +1,8 @@
-import { SectionHeaderData } from '@lib/types';
 import { Box } from '@components/Box';
 import { Typography } from '@components/Typography';
+import { SectionHeaderData } from '@lib/types';
 
-interface SectionHeaderProps extends SectionHeaderData {}
+type SectionHeaderProps = SectionHeaderData
 
 export const SectionHeader = (props: SectionHeaderProps): JSX.Element => {
   const { headline, preHeadline, subHeadline } = props;

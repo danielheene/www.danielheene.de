@@ -1,10 +1,11 @@
-import { ServiceItemData, ServicesSectionData } from '@lib/types';
+import { Icon } from '@iconify/react';
+
 import { Section } from '@components/Section';
 import { SectionHeader } from '@components/SectionHeader';
 import { Typography } from '@components/Typography';
-import { Icon } from '@iconify/react';
+import { ServiceItemData, ServicesSectionData } from '@lib/types';
 
-interface ServiceItemProps extends Omit<ServiceItemData, '_key'> {}
+type ServiceItemProps = Omit<ServiceItemData, '_key'>
 
 const ServiceItem = ({ name, icon, body }: ServiceItemProps): JSX.Element => {
   return (
@@ -18,7 +19,7 @@ const ServiceItem = ({ name, icon, body }: ServiceItemProps): JSX.Element => {
   );
 };
 
-interface ServicesSectionProps extends ServicesSectionData {}
+type ServicesSectionProps = ServicesSectionData
 
 export const ServicesSection = (props: ServicesSectionProps): JSX.Element => {
   const { header, entries } = props;

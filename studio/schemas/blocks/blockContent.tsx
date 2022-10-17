@@ -1,12 +1,12 @@
-import { defineArrayMember, defineType } from 'sanity';
 import { Icon } from '@iconify/react';
+import { defineType } from 'sanity';
 
 export default defineType({
   title: 'Block Content',
   name: 'blockContent',
   type: 'array',
   of: [
-    defineArrayMember({
+    {
       title: 'Block',
       type: 'block',
       styles: [
@@ -32,12 +32,12 @@ export default defineType({
           // { type: 'internalLink', icon: LinkIcon },
         ],
       },
-    }),
-    defineArrayMember({
+    },
+    {
       type: 'image',
       icon: <Icon icon='cil:image' />,
-    }),
-    defineArrayMember({
+    },
+    {
       type: 'code',
       name: 'code',
       icon: <Icon icon='ci:code' />,
@@ -53,6 +53,6 @@ export default defineType({
           { title: 'Rust', value: 'rust', mode: 'rust' },
         ],
       },
-    }),
+    },
   ],
 });

@@ -1,5 +1,12 @@
 import blockContent from './blocks/blockContent';
-
+import category from './documents/document.category';
+import post from './documents/document.post';
+import project from './documents/document.project';
+import tag from './documents/document.tag';
+import settingsMain from './documents/settings.main';
+import settingsMeta from './documents/settings.meta';
+import settingsNavigation from './documents/settings.navigation';
+import home from './documents/singleton.home';
 import metaDefaults from './objects/meta.defaults';
 import contactServices from './objects/object.contactServices';
 import externalLink from './objects/object.externalLink';
@@ -8,13 +15,8 @@ import navigationItem from './objects/object.navigationItem';
 import sectionHeader from './objects/object.sectionHeader';
 import serviceItem from './objects/object.serviceItem';
 import sectionLogoCloud from './objects/section.logoCloud';
-import sectionServices from './objects/section.services';
 import sectionQualifications from './objects/section.qualifications';
-
-import project from './documents/document.project';
-import navigation from './documents/document.navigation';
-import home from './documents/singleton.home';
-import settings from './documents/singleton.settings';
+import sectionServices from './objects/section.services';
 
 export const schemaTypes = [
   /* meta */
@@ -33,8 +35,12 @@ export const schemaTypes = [
   sectionQualifications,
 
   /* documents */
+  category,
+  post,
   project,
-  navigation,
+  tag,
   home,
-  settings,
+  settingsMain,
+  settingsMeta,
+  settingsNavigation,
 ];

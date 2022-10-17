@@ -1,4 +1,4 @@
-import { defineArrayMember, defineField, defineType } from 'sanity';
+import { defineField, defineType } from 'sanity';
 
 import 'ace-builds/src-noconflict/mode-css';
 import 'ace-builds/src-noconflict/mode-dockerfile';

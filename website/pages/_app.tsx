@@ -1,7 +1,4 @@
-import React from 'react';
-import { AppProps } from 'next/app';
-import { OffCanvas } from '@components/OffCanvas';
-import { Toasty } from '@components/Toasty';
+import React, { useEffect } from 'react';
 
 import '../styles/globals.css';
 import '../styles/font-inter.css';
@@ -10,10 +7,26 @@ import '../styles/font-recursive.css';
 import '../styles/font-space-grotesk.css';
 import '../styles/font-space-mono.css';
 import '../styles/font-syne.css';
-
 import { GradientBackground } from '@components/GradientBackground';
+import { OffCanvas } from '@components/OffCanvas';
+import { Toasty } from '@components/Toasty';
+import { useAppStore } from '@lib/appStore';
+import { AppPropsWithLayout } from '@lib/types';
+import { useIsomorphicLayoutEffect } from '@lib/utils';
 
-export default function App({ Component, pageProps, router }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+  router,
+}: AppPropsWithLayout): JSX.Element {
+  const getLayout: (page: JSX.Element) => JSX.Element =
+    Component.getLayout ?? ((page) => page);
+  const { setSettings } = useAppStore();
+
+  useIsomorphicLayoutEffect(() => {
+    setSettings(pageProps.settings);
+  }, [pageProps]);
+
   // useEffect(() => {
   //   NProgress.configure({
   //     minimum: 0.3,
@@ -27,7 +40,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
   //   router.events.on('routeChangeError', NProgress.done);
   // }, []);
 
-  return (
+  return getLayout(
     <>
       <Component {...pageProps} />
       <Toasty audioPath='/toasty/toasty.mp3' imagePath='/toasty/toasty.webp' />

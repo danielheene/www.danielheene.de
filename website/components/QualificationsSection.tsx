@@ -1,9 +1,10 @@
-import clsx from 'clsx';
-import { QualificationsSectionData, QualificationItemData } from '@lib/types';
-import { Card } from '@components/Card';
-import { SectionHeader } from '@components/SectionHeader';
-import { Section } from '@components/Section';
 import { useMemo } from 'react';
+import clsx from 'clsx';
+
+import { Card } from '@components/Card';
+import { Section } from '@components/Section';
+import { SectionHeader } from '@components/SectionHeader';
+import { QualificationItemData,QualificationsSectionData } from '@lib/types';
 
 interface QualificationEntryProps extends QualificationItemData {
   index: number;
@@ -82,7 +83,7 @@ const QualificationEntry = ({
                 'mb-5',
               ])}
             >
-              {!!end ? `${start} - ${end}` : `since ${start}`}
+              {end ? `${start} - ${end}` : `since ${start}`}
               {/*{start} - {end}*/}
             </span>
             <p className='font-medium text-base text-white/70'>{body}</p>
@@ -94,7 +95,7 @@ const QualificationEntry = ({
   );
 };
 
-interface QualificationsSectionProps extends QualificationsSectionData {}
+type QualificationsSectionProps = QualificationsSectionData
 
 export const QualificationsSection = (
   props: QualificationsSectionProps

@@ -1,4 +1,5 @@
 import React, { memo, useEffect } from 'react';
+
 import { isBrowser, useIsomorphicLayoutEffect } from '@lib/utils';
 
 const focusableSelector = [
@@ -38,8 +39,7 @@ export const FocusTrap = memo(({ children }: FocusTrapProps): JSX.Element => {
   }, []);
 
   const focusElement = React.useCallback((element: HTMLElement) => {
-    let interval: any;
-    interval = setInterval(() => {
+    const interval: NodeJS.Timer | number = setInterval(() => {
       if (document.activeElement === element) {
         focusedRef.current = element;
         clearInterval(interval);
@@ -74,9 +74,8 @@ export const FocusTrap = memo(({ children }: FocusTrapProps): JSX.Element => {
     [focusElement]
   );
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     window?.addEventListener('keydown', handleFocus, false);
-
     return () => {
       window?.removeEventListener('keydown', handleFocus, false);
     };

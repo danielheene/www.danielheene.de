@@ -1,4 +1,70 @@
-import { ImageAsset } from '@sanity/types/src';
+import { FileAsset, ImageAsset } from '@sanity/types/src';
+
+export interface Settings {
+  readonly _id: 'settings';
+  readonly _type: 'settings';
+
+  pageTitle: string;
+  hireMe: boolean;
+
+  contactServices: {
+    [k: string]: string;
+  };
+}
+
+export type NavigationItemVariant =
+  | 'external'
+  | 'internal'
+  | 'reference'
+  | 'file';
+export type NavigationItemMode = 'default' | 'primary' | 'ghost';
+
+export type NavigationItem = {
+  readonly _key: string;
+  readonly _type: 'navigationItem';
+
+  label: string;
+  mode: NavigationItemMode;
+  variant: NavigationItemVariant;
+} & (
+  | {
+      variant: 'external';
+      url: string;
+      blank: boolean;
+    }
+  | {
+      variant: 'internal';
+      url: string;
+    }
+  | {
+      variant: 'reference';
+      _ref: string;
+    }
+  | {
+      variant: 'file';
+      file: FileAsset;
+      forceDownload: boolean;
+    }
+);
+
+export type ContactProvider =
+  | 'github'
+  | 'whatsapp'
+  | 'instagram'
+  | 'discord'
+  | 'mail'
+  | 'phone'
+  | 'linkedin'
+  | 'xing';
+
+export type ContactService = {
+  name: ContactProvider;
+  label: string;
+  urlPrefix: string;
+  icon: string;
+};
+
+export type ContactData = Record<ContactProvider, string>;
 
 export type QualificationItemData = {
   readonly _type: 'block.qualification';

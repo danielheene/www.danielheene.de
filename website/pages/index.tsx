@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { GetStaticProps } from 'next';
-
-import { DefaultLayout } from '@layouts/Default.layout';
-import Sanity from '@lib/sanity';
 import { groq } from 'next-sanity';
-import { QualificationsSection } from '@components/QualificationsSection';
+
+import { HeroStage } from '@components/HeroStage';
 import { LogoCloudSection } from '@components/LogoCloudSection';
+import { QualificationsSection } from '@components/QualificationsSection';
+import { ServicesSection } from '@components/ServicesSection';
+import { DefaultLayout } from '@layouts/Default.layout';
+import Sanity, { homeQuery } from '@lib/sanity';
 import {
   HeroStageData,
   LogoCloudSectionData,
+  NextPageWithLayout,
   QualificationsSectionData,
   ServicesSectionData,
+  Settings,
 } from '@lib/types';
-import { HeroStage } from '@components/HeroStage';
-import { ServicesSection } from '@components/ServicesSection';
+
+// import { LayoutGroup } from 'framer-motion';
 
 interface HomeData {
   introLine: string;
@@ -23,79 +27,52 @@ interface HomeData {
   heroStage: HeroStageData;
 }
 
-interface Settings {
-  readonly _id: string;
-  readonly _type: string;
-
-  pageTitle: string;
-  hireMe: boolean;
-
-  contactServices: {
-    [k: string]: string;
-  };
-}
-
 interface Props extends HomeData {
   data: HomeData;
-  settings: Settings;
+  navigations: [];
+  settings: Partial<Settings>;
 }
 
-export default function HomePage({ data, settings }: Props) {
+const HomePage: NextPageWithLayout = ({
+  data,
+  navigations,
+  settings,
+}: Props) => {
   const { heroStage, qualifications, logoCloud, services } = data;
   // const { hireMe } = settings;
 
-  console.log(data);
+  // console.log(data, navigations, settings);
 
   return (
-    <DefaultLayout>
+    <>
       {heroStage && <HeroStage {...heroStage} />}
 
       <ServicesSection {...services} />
       <QualificationsSection {...qualifications} />
       <LogoCloudSection {...logoCloud} />
       {/*{hireMe && <HireMeMemoji />}*/}
-    </DefaultLayout>
+    </>
   );
-}
+};
+
+HomePage.getLayout = (page: ReactElement) => (
+  <DefaultLayout>{page}</DefaultLayout>
+);
 
 export const getStaticProps: GetStaticProps = async ({ preview = false }) => {
-  const query = groq`
-    {
-      "data": *[_type == "home"][0] {
-        ...,
-        heroStage {
-          ...,
-          portrait { ..., ...asset-> },
-        },
-        services {
-          ...
-        },
-        logoCloud {
-          ...,
-          entries[published == true] {
-            ...,
-            image { ..., ...asset-> },
-          }
-        }
-      },
-      "navigations": *[_type == "navigation"],
-      "settings": *[_type == "settings" && _id == "settings"][0] {
-        ...,
-        "publicKey": publicKey.asset->,
-        "resume": resume.asset->
-      },
-    }
-  `;
   const SanityClient = Sanity.getClient(preview);
-  const { data, settings } = await SanityClient.fetch(query);
+  const { data, settings, navigations } = await SanityClient.fetch(homeQuery);
 
   // console.log(JSON.stringify(data, null, 2));
 
   return {
     props: {
       data,
+      navigations,
       settings,
     },
     revalidate: process.env.NODE_ENV === 'production' ? 300 : 5,
   };
 };
+
+export default HomePage;

@@ -1,4 +1,3 @@
-import { Box } from '@components/Box';
 import {
   forwardRef,
   HTMLAttributes,
@@ -6,9 +5,10 @@ import {
   RefObject,
   useMemo,
 } from 'react';
-import clsx, { ClassValue } from 'clsx';
-import * as React from 'react';
 import ReactParallaxTilt from 'react-parallax-tilt';
+import clsx, { ClassValue } from 'clsx';
+
+import { Box } from '@components/Box';
 
 interface CardProps extends Omit<HTMLAttributes<HTMLDivElement>, 'className'> {
   className?: ClassValue;
@@ -54,7 +54,7 @@ export const Card = forwardRef(
           {children}
         </Box>
       ),
-      [children, className, variant, container]
+      [ref, otherProps, variant, container, radius, className, children]
     );
 
     return tilted ? (

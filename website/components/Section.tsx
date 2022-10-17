@@ -1,5 +1,6 @@
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 import clsx from 'clsx';
+
 import { Box } from '@components/Box';
 
 interface SectionProps {

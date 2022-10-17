@@ -1,6 +1,8 @@
-import { defineField, defineType } from 'sanity';
-import { COL_FIELDSETS } from '../_constants';
+import { Icon } from '@iconify/react';
 import { deburr, kebabCase } from 'lodash';
+import { defineField, defineType } from 'sanity';
+
+import { COL_FIELDSETS } from '../_constants';
 
 export default defineType({
   title: 'SEO',
@@ -29,10 +31,33 @@ export default defineType({
         current: '',
       },
       options: {
-        source: 'title',
-        slugify: (input) => `/project/` + kebabCase(deburr(input)),
+        source: (doc) => {
+          const title = kebabCase(deburr(doc.title as string));
+
+          switch (doc._type) {
+            case 'home': {
+              return `/`;
+            }
+            case 'project': {
+              return `/projects/${title}`;
+            }
+            case 'post': {
+              return `/posts/${title}`;
+            }
+            case 'category': {
+              return `/categories/${title}`;
+            }
+            case 'tag': {
+              return `/tags/${title}`;
+            }
+            default:
+              return title;
+          }
+        },
+        slugify: (input) => input,
         maxLength: 96,
       },
+      hidden: ({ document }) => document?._type.includes('settings'),
     }),
     defineField({
       title: 'Description',
@@ -56,7 +81,7 @@ export default defineType({
       of: [
         {
           title: 'Entry',
-          name: 'tag',
+          name: 'metaTag',
           type: 'object',
           fields: [
             {
@@ -95,6 +120,21 @@ export default defineType({
               initialValue: '',
             },
           ],
+          preview: {
+            select: {
+              type: 'type',
+              value: 'value',
+              content: 'content',
+            },
+            prepare(props: { type: string; value: string; content: string }) {
+              const { type, value, content } = props;
+
+              return {
+                title: `<meta ${type}='${value} content='${content}" />`,
+                media: <Icon icon='carbon:tag' />,
+              };
+            },
+          },
         },
       ],
     }),

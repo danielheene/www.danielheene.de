@@ -1,4 +1,5 @@
 import { CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
+
 import { Gradient } from './Gradient';
 
 const canvasId = 'gradient-background';

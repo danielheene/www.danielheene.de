@@ -1,7 +1,8 @@
 import React from 'react';
-import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { Icon } from '@iconify/react';
+import clsx from 'clsx';
+
 import { isBrowser } from '@lib/utils';
 
 export default function PreviewBanner() {

@@ -1,7 +1,8 @@
-import { defineArrayMember, defineField, defineType } from 'sanity';
-import { COL_FIELDSET_NAME, COL_FIELDSETS } from '../_constants';
-import { SanityPreviewWithPublishedLabel } from '../../components';
 import { Icon } from '@iconify/react';
+import { defineField, defineType } from 'sanity';
+
+import { SanityPreviewWithPublishedLabel } from '../../components';
+import { COL_FIELDSET_NAME, COL_FIELDSETS } from '../_constants';
 
 export default defineType({
   title: 'Qualification',
@@ -23,7 +24,7 @@ export default defineType({
       name: 'entries',
       type: 'array',
       of: [
-        defineArrayMember({
+        {
           title: 'Qualification Block',
           name: 'block.qualification',
           type: 'object',
@@ -88,7 +89,7 @@ export default defineType({
               media: <Icon icon='ci:code' />,
             }),
           },
-        }),
+        },
       ],
     }),
   ],

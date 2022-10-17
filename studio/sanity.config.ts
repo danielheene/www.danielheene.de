@@ -1,11 +1,14 @@
+import React from 'react';
+import { Icon } from '@iconify/react';
+import { codeInput } from '@sanity/code-input';
+import { visionTool } from '@sanity/vision';
 import { createConfig } from 'sanity';
 import { deskTool } from 'sanity/desk';
 import { unsplashImageAsset } from 'sanity-plugin-asset-source-unsplash';
-import { codeInput } from '@sanity/code-input';
 import { markdownSchema } from 'sanity-plugin-markdown';
-import { visionTool } from '@sanity/vision';
 
 import { schemaTypes } from './schemas';
+
 import './overrides.css';
 
 export default createConfig({
@@ -53,16 +56,102 @@ export default createConfig({
               .title('Home')
               .child(S.document().schemaType('home').documentId('home')),
             S.divider(),
-            ...S.documentTypeListItems().filter(
-              (listItem) =>
-                !['home', 'settings'].includes(listItem.getId() as string)
-            ),
+            // S.listItem()
+            //   .title('Projects')
+            //   .child(
+            //     S.list()
+            //       .title('Projects')
+            //       .items([
+            //         S.listItem()
+            //           .title('Documents')
+            //           .child(
+            //             S.documentList()
+            //               .title('Document')
+            //               .filter('_type == "project.document"')
+            //           ),
+            //         S.listItem()
+            //           .title('Categories')
+            //           .child(
+            //             S.documentList()
+            //               .title('Category')
+            //               .filter('_type == "project.category"')
+            //           ),
+            //         S.listItem()
+            //           .title('Tags')
+            //           .child(
+            //             S.documentList()
+            //               .title('Tag')
+            //               .filter('_type == "project.tag"')
+            //           ),
+            //       ])
+            //   ),
+
+            S.listItem()
+              .title('Posts')
+              .schemaType('post')
+              .child(S.documentTypeList('post').title('Posts')),
+            S.listItem()
+              .title('Projects')
+              .schemaType('project')
+              .child(S.documentTypeList('project').title('Projects')),
+            S.listItem()
+              .title('Categories')
+              .schemaType('category')
+              .child(S.documentTypeList('category').title('Categories')),
+            S.listItem()
+              .title('Tags')
+              .schemaType('tag')
+              .child(S.documentTypeList('tag').title('Tags')),
+
             S.divider(),
+
             S.listItem()
               .title('Settings')
+              .icon(() =>
+                React.createElement(Icon, {
+                  icon: 'carbon:settings',
+                })
+              )
               .child(
-                S.document().schemaType('settings').documentId('settings')
+                S.list()
+                  .title('Settings')
+                  .items([
+                    S.listItem()
+                      .title('Main')
+                      .schemaType('settings.main')
+                      .child(
+                        S.document().schemaType('settings.main').title('Main')
+                      ),
+                    S.listItem()
+                      .title('Navigation')
+                      .schemaType('settings.navigation')
+                      .child(
+                        S.document()
+                          .schemaType('settings.navigation')
+                          .title('Navigation')
+                      ),
+                    S.listItem()
+                      .title('Meta')
+                      .schemaType('settings.meta')
+                      .child(
+                        S.document().schemaType('settings.meta').title('Meta')
+                      ),
+                  ])
               ),
+
+            ...S.documentTypeListItems().filter(
+              (listItem) =>
+                ![
+                  'home',
+                  'post',
+                  'project',
+                  'category',
+                  'tag',
+                  'settings.main',
+                  'settings.navigation',
+                  'settings.meta',
+                ].includes(listItem.getId() as string)
+            ),
           ]),
     }),
     unsplashImageAsset(),

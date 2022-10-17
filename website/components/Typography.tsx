@@ -1,4 +1,3 @@
-import clsx, { ClassValue } from 'clsx';
 import React, {
   createRef,
   ElementType,
@@ -7,6 +6,8 @@ import React, {
   memo,
   useMemo,
 } from 'react';
+import clsx, { ClassValue } from 'clsx';
+
 import { Box } from '@components/Box';
 import { mergeRefs } from '@lib/utils';
 

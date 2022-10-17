@@ -1,17 +1,17 @@
-import React, { memo } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
+import * as ReactDOM from 'react-dom';
+import { useRouter } from 'next/router';
+import { clsx } from 'clsx';
 import {
   AnimatePresence,
   domAnimation,
   LazyMotion,
   motion,
 } from 'framer-motion';
-import clsx from 'clsx';
-import { useRouter } from 'next/router';
-import { useAppStore } from '@lib/app-context';
+
 import { FocusTrap } from '@components/FocusTrap';
-import { isBrowser } from '@lib/utils';
-import { Navigation } from '@components/Navigation';
+// import { Navigation } from '@components/Na';
+import { useAppStore } from '@lib/appStore';
 
 const fadeInSpeed = 200;
 const fadeInAnimation = {
@@ -33,7 +33,7 @@ const fadeInAnimation = {
   },
 };
 
-export const OffCanvas = memo((): JSX.Element => {
+export const OffCanvas = React.memo((): JSX.Element => {
   const [portal, setPortal] = React.useState<HTMLDivElement>();
   const { showNavigation, setShowNavigation } = useAppStore();
   const router = useRouter();
@@ -49,10 +49,10 @@ export const OffCanvas = memo((): JSX.Element => {
 
   /** add element to body */
   React.useEffect(() => {
-    if (document && portal) document.body.appendChild(portal);
+    if (portal) document.body.appendChild(portal);
 
     return () => {
-      if (document && portal) document.body.removeChild(portal);
+      if (portal) document.body.removeChild(portal);
     };
   }, [portal]);
 
@@ -86,21 +86,15 @@ export const OffCanvas = memo((): JSX.Element => {
 
   /** bind close key */
   React.useEffect(() => {
-    if (isBrowser()) {
-      window.addEventListener('keydown', handleKeyPress, false);
-    }
+    window.addEventListener('keydown', handleKeyPress, false);
     return () => {
-      if (isBrowser()) {
-        window.removeEventListener('keydown', handleKeyPress, false);
-      }
+      window.removeEventListener('keydown', handleKeyPress, false);
     };
   }, [handleKeyPress]);
 
   /** disables page scrolling when off-canvas is open */
   React.useEffect(() => {
-    if (isBrowser()) {
-      document.body.style.overflowY = showNavigation ? 'hidden' : '';
-    }
+    document.body.style.overflowY = showNavigation ? 'hidden' : '';
   }, [showNavigation]);
 
   if (!portal) return null;
@@ -124,7 +118,14 @@ export const OffCanvas = memo((): JSX.Element => {
             ])}
           >
             <FocusTrap>
-              <Navigation />
+              <ul>
+                <li>Item #1</li>
+                <li>Item #2</li>
+                <li>Item #3</li>
+                <li>Item #4</li>
+                <li>Item #5</li>
+                <li>Item #6</li>
+              </ul>
             </FocusTrap>
           </motion.div>
         )}

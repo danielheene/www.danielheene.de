@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import clsx, { ClassValue } from 'clsx';
-import { useAppStore } from '@lib/app-context';
+
 import { Burger } from '@components/Burger';
+import { useAppStore } from '@lib/appStore';
 
 interface MenuButtonProps {
   className?: ClassValue;
